@@ -42,7 +42,7 @@ test_years = cell2mat(years(51:60));
 for i=2:length(unique_genres)
     train_feats  = vertcat(train_feats,features((i-1)*60+1:(i-1)*60+50,:));
     train_genres = vertcat(train_genres,genres((i-1)*60+1:(i-1)*60+50,:));
-    train_years  = vertcat(train_years,years((i-1)*60+1:(i-1)*60+50,:));
+    train_years  = vertcat(train_years,cell2mat(years((i-1)*60+1:(i-1)*60+50,:)));
     
     test_feats   = vertcat(test_feats,features((i-1)*60+51:(i-1)*60+60,:));
     test_genres  = vertcat(test_genres,genres((i-1)*60+51:(i-1)*60+60,:));
@@ -53,7 +53,10 @@ end
 % Using SVM to predict the genre
 predicted_categories = svm_classify(train_feats, train_genres, test_feats);
 
-%%
+% Show genre rate
+g_diff = strcmp(test_genres, predicted_categories);
+mean(g_diff);
+
 % For each track, run K-NN for the specific genre selected.
 for i=1:length(predicted_categories)
     
