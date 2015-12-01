@@ -1,3 +1,11 @@
+% =========================================================================
+% Support Vector Machine is typical classification model
+% =========================================================================
+% @param train_feats: feature vector of training samples
+% @param train_labels: vector of labels of training samples
+% @param test_feats: feature vector of testing samples
+% =========================================================================
+
 function predicted_categories = svm_classify(train_feats, train_labels, test_feats)
 categories = unique(train_labels); 
 num_categories = length(categories);

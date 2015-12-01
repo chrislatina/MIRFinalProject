@@ -1,3 +1,18 @@
+% =========================================================================
+% This function extract features from the audio file, then generate the
+% feature matrix including MFCC, Zero Crossing Rate, Max Envelop, Spectral
+% Crest, Spectral Centroid, and Spectral Flux
+% =========================================================================
+% @param: dataPath is the directory of the audio meta data
+% @param: filepath is the directory of audio files
+% @param: windowSize
+% @param: hopSize
+% =========================================================================
+% @retval features is a matrix with the size of total number of audio samples by number of features
+% @retval genres is a vector with the size of total number of audio samples
+% by 1.
+% @retval feature vector in the size of number of audio samples by 1
+
 function [ features, genres, years] = getMetaData(dataPath, filePath, windowSize, hopSize)
 
 data = readtable(dataPath,'Delimiter','tab','ReadVariableNames',false);

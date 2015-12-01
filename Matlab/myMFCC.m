@@ -1,3 +1,13 @@
+% =========================================================================
+% Mel-Frequency Ceptral Coeeficients are perceptually motivated features.
+% Typically, 13 coeeficients are used for speech representation.
+% =========================================================================
+% @param X: Magnitude spectrum of audio signal
+% @param fs: sampling frequency
+% @retval mfcc: the matrix of MFCC in the size of number of audio samples *
+% 13
+% =========================================================================
+
 function [mfcc] = myMFCC(X, fs)
 
 iNumCoeffs  = 13;
