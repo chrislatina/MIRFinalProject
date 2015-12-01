@@ -9,12 +9,14 @@ hopSize = 1024;
 
 %%
 % Folder path
-folderPath = '/Users/chrislatina/Documents/GeorgiaTech/F15/MIR/FinalProject/Dataset';
+% folderPath = '/Users/chrislatina/Documents/GeorgiaTech/F15/MIR/FinalProject/Dataset';
+folderPath = '/Users/musictechnology/Desktop/Dataset';
 
 %%
 % Read in Data
-dataPath = '/Users/chrislatina/Documents/Sites/MIRFinalProject/GTZAN60.txt';
-
+% dataPath = '/Users/chrislatina/Documents/Sites/MIRFinalProject/GTZAN60.txt';
+dataPath = '/Users/musictechnology/Desktop/MIRFinalProject/GTZAN60.txt';
+%%
 % Extract Features -- if already loaded, just load from the file
 if ~exist('features_final.mat', 'file')
     [features, genres, years] = getMetaData(dataPath, folderPath, windowSize, hopSize);
@@ -47,10 +49,11 @@ for i=2:length(unique_genres)
     test_years   = vertcat(test_years,cell2mat(years((i-1)*60+51:(i-1)*60+60,:)));
 end
 
-
-% Calculate 
+%%
+% Using SVM to predict the genre
 predicted_categories = svm_classify(train_feats, train_genres, test_feats);
 
+%%
 % For each track, run K-NN for the specific genre selected.
 for i=1:length(predicted_categories)
     
