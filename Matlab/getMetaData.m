@@ -1,6 +1,6 @@
-function [ features, genres] = getMetaData2(dataPath, filePath, windowSize, hopSize)
+function [ features, genres, years] = getMetaData(dataPath, filePath, windowSize, hopSize)
 
-data = readtable(dataPath,'Delimiter',',','ReadVariableNames',false);
+data = readtable(dataPath,'Delimiter','tab','ReadVariableNames',false);
 num_tracks = size(data,1);
 %Construct feature matrix and genre vector
 features = zeros(num_tracks, 13);
@@ -9,7 +9,7 @@ features = zeros(num_tracks, 13);
 for i = 1:num_tracks;
     genres{i} = data{i,5}{1};
     fileName = data{i,6}{1};
-    year = data{i,6}{1};
+    years{i} = data{i,4};
     file = strcat(filePath, '/',fileName);
     [y,Fs] = audioread(file);
     
