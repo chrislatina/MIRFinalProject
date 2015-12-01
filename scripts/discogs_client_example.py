@@ -61,6 +61,37 @@ def getDatasetMetaData():
                 print "NO RESULTS: " + songTitle
 
 
+def getGTZANMetaData():
+    counter = 0
+    with open('GTZANindex_Formated.txt', 'rU') as f:
+        reader = csv.reader(f, dialect=csv.excel_tab)
+        for track in reader:
+            filename = track[0]
+            artist = track[1]
+            songTitle = track[2]
+
+            # Search discogs
+            try:
+                search_results = discogsclient.search(songTitle, type='master', artist=artist)
+
+                search_results
+                time.sleep(1)
+                if(search_results.count > 0):
+                    masterID = search_results[0].id
+
+                    master_release = discogsclient.master(masterID)
+
+                    with open('GTZAN.csv', 'a') as fp:
+                        a = csv.writer(fp, delimiter=',')
+                        # Write  Artist, Album, Year, Genre, Styles
+                        data = [[artist, master_release.title, songTitle, master_release.data['year'], master_release.genres[0], filename, master_release.styles]]
+                        a.writerows(data)
+                else:
+                    print "COUNT ZERO: " + songTitle
+            except:
+                print "NO RESULTS: " + songTitle
+
+
 #ie genre = alternative
 def getDiscogsMetaData(genre):
     obj = untangle.parse('../Dataset/'+genre+'.xml')
@@ -168,7 +199,8 @@ print ' Authentication complete. Future requests will be signed with the above t
 # search_results = discogsclient.search('Section 2', type='master',
 #         artist='Kunek')
 
-getDatasetMetaData()
+getGTZANMetaData();
+#getDatasetMetaData()
 #getDiscogsMetaData('blues')
 
 #search_results[0].id

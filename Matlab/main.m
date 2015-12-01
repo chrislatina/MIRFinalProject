@@ -9,14 +9,14 @@ hopSize = 1024;
 folderPath = '/Users/chrislatina/Documents/GeorgiaTech/F15/MIR/FinalProject/Dataset';
 
 % Read in Data
-dataPath = '/Users/chrislatina/Documents/GeorgiaTech/F15/MIR/FinalProject/App/MIRFINAL/GTZAN.txt';
+dataPath = '/Users/chrislatina/Documents/Sites/MIRFinalProject/GTZAN60.txt';
 
 % Extract Features -- if already loaded, just load from the file
 if ~exist('vocab.mat', 'file')
     [features, genres, years] = getMetaData(dataPath, folderPath, windowSize, hopSize);
-    save('features.mat', 'features');
-    save('genres.mat', 'genres');
-    save('years.mat', 'years');
+    save('features_final.mat', 'features');
+    save('genres_final.mat', 'genres');
+    save('years_final.mat', 'years');
 else
     load('features60.mat');
     load('genres60.mat');
