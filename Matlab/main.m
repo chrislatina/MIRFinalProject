@@ -12,15 +12,15 @@ folderPath = '/Users/chrislatina/Documents/GeorgiaTech/F15/MIR/FinalProject/Data
 dataPath = '/Users/chrislatina/Documents/Sites/MIRFinalProject/GTZAN60.txt';
 
 % Extract Features -- if already loaded, just load from the file
-if ~exist('vocab.mat', 'file')
+if ~exist('features_final.mat', 'file')
     [features, genres, years] = getMetaData(dataPath, folderPath, windowSize, hopSize);
     save('features_final.mat', 'features');
     save('genres_final.mat', 'genres');
     save('years_final.mat', 'years');
 else
-    load('features60.mat');
-    load('genres60.mat');
-    load('years60.mat');
+    load('features_final.mat');
+    load('genres_final.mat');
+    load('years_final.mat');
 end
 
 unique_genres = unique(genres);
@@ -60,4 +60,4 @@ for i=1:length(predicted_categories)
    estimatedClasses(i) = myKnn(years(indices), train_feats(indices,:), test_feats(i,:), K); 
 end
 
-diff = estimatedClasses' - test_years;
+diff = abs(estimatedClasses' - test_years);

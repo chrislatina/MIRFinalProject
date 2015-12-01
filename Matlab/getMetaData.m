@@ -35,6 +35,6 @@ for i = 1:num_tracks;
 end
 
 genres = genres';
-
+years = years';
 end
 
