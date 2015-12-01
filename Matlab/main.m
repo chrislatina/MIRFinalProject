@@ -30,29 +30,46 @@ else
 end
 
 unique_genres = unique(genres);
+num_feat_per_genre = 60;
 
+years = cell2mat(years);
+
+% Randomize features within each genre
+rand_seed = randperm(length(num_feat_per_genre));
+
+for i=1:length(unique_genres)
+    temp_feat = features((i-1)*60+1:i*60);
+    temp_genre= genres((i-1)*60+1:i*60);
+    temp_year= years((i-1)*60+1:i*60);
+    
+    features((i-1)*60+1:i*60) = temp_feat(rand_seed);
+    genres((i-1)*60+1:i*60) = temp_genre(rand_seed);
+    years((i-1)*60+1:i*60) = temp_year(rand_seed);
+end
+
+% Construct test vs training data
 train_feats = features(1:50,:);
 train_genres = genres(1:50);
 train_years = years(1:50);
 
 test_feats = features(51:60,:);
 test_genres = genres(51:60);
-test_years = cell2mat(years(51:60));
+test_years = years(51:60);
 
 for i=2:length(unique_genres)
     train_feats  = vertcat(train_feats,features((i-1)*60+1:(i-1)*60+50,:));
     train_genres = vertcat(train_genres,genres((i-1)*60+1:(i-1)*60+50,:));
-    train_years  = vertcat(train_years,cell2mat(years((i-1)*60+1:(i-1)*60+50,:)));
+    train_years  = vertcat(train_years,years((i-1)*60+1:(i-1)*60+50,:));
     
     test_feats   = vertcat(test_feats,features((i-1)*60+51:(i-1)*60+60,:));
     test_genres  = vertcat(test_genres,genres((i-1)*60+51:(i-1)*60+60,:));
-    test_years   = vertcat(test_years,cell2mat(years((i-1)*60+51:(i-1)*60+60,:)));
+    test_years   = vertcat(test_years,years((i-1)*60+51:(i-1)*60+60,:));
 end
 
 %%
 % Using SVM to predict the genre
 predicted_categories = svm_classify(train_feats, train_genres, test_feats);
-
+% predicted_categories = myKnn2(train_genres, train_feats, test_feats, 7); 
 % Show genre rate
 g_diff = strcmp(test_genres, predicted_categories);
 mean(g_diff);
