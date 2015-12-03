@@ -1,3 +1,6 @@
+clear;
+
+
 %% Include vl_feat for the svm
 % run('/Users/chrislatina/Documents/GeorgiaTech/F15/Comp Vision/Assignment 4/vlfeat-0.9.20/toolbox/vl_setup')
 run('/Users/musictechnology/Dropbox/Fall_2015/6476CS_CV/Projects/proj3/vlfeat-0.9.20/toolbox/vl_setup')
@@ -88,3 +91,4 @@ for i=1:length(predicted_categories)
 end
 
 diff = abs(estimatedClasses' - test_years);
+mean(diff)

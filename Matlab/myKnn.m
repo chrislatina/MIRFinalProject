@@ -18,6 +18,8 @@ end
 years = trainLabel(I(:,1:K));
 k_dist = B(:,1:K);
 
-estimatedClass = mean([years(1) years(2)]);
+f_dist = (1- (k_dist / (sum(k_dist)))) / (K-1);
+
+estimatedClass = mean(f_dist' .* years) * K;
 
 end
