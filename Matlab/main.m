@@ -34,13 +34,9 @@ end
 
 if ~exist('spectral_features.mat', 'file')
     [spectral_features, genres, years] = getSpectralFeatures(dataPath, folderPath, windowSize, hopSize);
-    save('spectral_features.mat', 'features');
-    save('genres_spectral_features.mat', 'genres');
-    save('years_spectral_features.mat', 'years');
+    save('spectral_features.mat', 'spectral_features');
 else
-    load('spectral_features.mat', 'features');
-    load('genres_spectral_features.mat', 'genres');
-    load('years_spectral_features.mat', 'years');
+    load('spectral_features.mat', 'spectral_features');
 end
 
 unique_genres = unique(genres);

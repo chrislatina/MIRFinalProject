@@ -35,6 +35,13 @@ else
     load('years_final.mat');
 end
 
+if ~exist('spectral_features.mat', 'file')
+    [spectral_features, genres, years] = getSpectralFeatures(dataPath, folderPath, windowSize, hopSize);
+    save('spectral_features.mat', 'spectral_features');
+else
+    load('spectral_features.mat', 'spectral_features');
+end
+
 unique_genres = unique(genres);
 num_feat_per_genre = 60;
 
