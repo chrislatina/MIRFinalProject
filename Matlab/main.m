@@ -2,8 +2,8 @@ clear;
 
 
 %% Include vl_feat for the svm
-run('/Users/chrislatina/Documents/GeorgiaTech/F15/Comp Vision/Assignment 4/vlfeat-0.9.20/toolbox/vl_setup')
-% run('/Users/musictechnology/Dropbox/Fall_2015/6476CS_CV/Projects/proj3/vlfeat-0.9.20/toolbox/vl_setup')
+% run('/Users/chrislatina/Documents/GeorgiaTech/F15/Comp Vision/Assignment 4/vlfeat-0.9.20/toolbox/vl_setup')
+run('/Users/musictechnology/Dropbox/Fall_2015/6476CS_CV/Projects/proj3/vlfeat-0.9.20/toolbox/vl_setup')
 
 %%
 % Extract features for each file
@@ -32,24 +32,35 @@ else
     load('years_final.mat');
 end
 
+if ~exist('spectral_features.mat', 'file')
+    [spectral_features, genres, years] = getSpectralFeatures(dataPath, folderPath, windowSize, hopSize);
+    save('spectral_features.mat', 'features');
+    save('genres_spectral_features.mat', 'genres');
+    save('years_spectral_features.mat', 'years');
+else
+    load('spectral_features.mat', 'features');
+    load('genres_spectral_features.mat', 'genres');
+    load('years_spectral_features.mat', 'years');
+end
+
 unique_genres = unique(genres);
 num_feat_per_genre = 60;
 
 years = cell2mat(years);
 
-% % Randomize features for each genre
-% for i=1:length(unique_genres)
-%     % Generate a random seed
-%     rand_seed = randperm(num_feat_per_genre);
-% 
-%     temp_feat = features((i-1)*60+1:i*60);
-%     temp_genre= genres((i-1)*60+1:i*60);
-%     temp_year= years((i-1)*60+1:i*60);
-%     
-%     features((i-1)*60+1:i*60) = temp_feat(rand_seed);
-%     genres((i-1)*60+1:i*60) = temp_genre(rand_seed);
-%     years((i-1)*60+1:i*60) = temp_year(rand_seed);
-% end
+% Randomize features for each genre
+for i=1:length(unique_genres)
+    % Generate a random seed
+    rand_seed = randperm(num_feat_per_genre);
+
+    temp_feat = features((i-1)*60+1:i*60);
+    temp_genre= genres((i-1)*60+1:i*60);
+    temp_year= years((i-1)*60+1:i*60);
+    
+    features((i-1)*60+1:i*60) = temp_feat(rand_seed);
+    genres((i-1)*60+1:i*60) = temp_genre(rand_seed);
+    years((i-1)*60+1:i*60) = temp_year(rand_seed);
+end
 
 % Construct test vs training data
 train_feats = features(1:50,:);
@@ -75,7 +86,7 @@ end
 predicted_years = svm_regression(train_feats, scaleYear(train_years), test_feats,scaleYear(test_years));
 predicted_years = reScaleYear(predicted_years);
 diff = abs(predicted_years - test_years);
-mean(diff)
+mean(diff);
 
 
 %% Using SVM to predict the genre
@@ -86,7 +97,7 @@ predicted_genres = myKnn_genre(train_genres, train_feats, test_feats, 3);
 
 % Show genre rate
 g_diff = strcmp(test_genres, predicted_categories);
-g_diff_mean = mean(g_diff)
+g_diff_mean = mean(g_diff);
 
 % For each track, run K-NN for the specific genre selected.
 for i=1:length(predicted_categories)

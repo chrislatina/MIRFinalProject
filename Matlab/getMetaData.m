@@ -18,7 +18,7 @@ function [ features, genres, years] = getMetaData(dataPath, filePath, windowSize
 data = readtable(dataPath,'Delimiter','tab','ReadVariableNames',false);
 num_tracks = size(data,1);
 %Construct feature matrix and genre vector
-features = zeros(num_tracks, 13);
+features = zeros(num_tracks, 26);
 
 % Open each file
 for i = 1:num_tracks;
@@ -46,7 +46,8 @@ for i = 1:num_tracks;
         mfcc(j,:) = myMFCC(mag_freq_blocked_x(:,j), Fs);
     end
 
-    features(i,:) = mean(mfcc,1);
+    features(i,1:13) = mean(mfcc,1);
+    features(i, 14:26) = std(mfcc,1);
 end
 
 genres = genres';
