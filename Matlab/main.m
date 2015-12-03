@@ -37,19 +37,19 @@ num_feat_per_genre = 60;
 
 years = cell2mat(years);
 
-% Generate a random seed
-rand_seed = randperm(num_feat_per_genre);
-
-% Randomize features for each genre
-for i=1:length(unique_genres)
-    temp_feat = features((i-1)*60+1:i*60);
-    temp_genre= genres((i-1)*60+1:i*60);
-    temp_year= years((i-1)*60+1:i*60);
-    
-    features((i-1)*60+1:i*60) = temp_feat(rand_seed);
-    genres((i-1)*60+1:i*60) = temp_genre(rand_seed);
-    years((i-1)*60+1:i*60) = temp_year(rand_seed);
-end
+% % Randomize features for each genre
+% for i=1:length(unique_genres)
+%     % Generate a random seed
+%     rand_seed = randperm(num_feat_per_genre);
+% 
+%     temp_feat = features((i-1)*60+1:i*60);
+%     temp_genre= genres((i-1)*60+1:i*60);
+%     temp_year= years((i-1)*60+1:i*60);
+%     
+%     features((i-1)*60+1:i*60) = temp_feat(rand_seed);
+%     genres((i-1)*60+1:i*60) = temp_genre(rand_seed);
+%     years((i-1)*60+1:i*60) = temp_year(rand_seed);
+% end
 
 % Construct test vs training data
 train_feats = features(1:50,:);
@@ -70,21 +70,23 @@ for i=2:length(unique_genres)
     test_years   = vertcat(test_years,years((i-1)*60+51:(i-1)*60+60,:));
 end
 
-scaled_years = scaleYear(train_years);
 %%
 % Using SVM to predict the year as a regression
-predicted_label = svm_regression(train_feats, scaled_years, test_feats);
+predicted_years = svm_regression(train_feats, scaleYear(train_years), test_feats,scaleYear(test_years));
+predicted_years = reScaleYear(predicted_years);
+diff = abs(predicted_years - test_years);
+mean(diff)
 
-%%
-% Using SVM to predict the genre
+
+%% Using SVM to predict the genre
 predicted_categories = svm_classify(train_feats, train_genres, test_feats);
 
 %% Use KNN to predict genre for comparison
-% predicted_categories = myKnn_genre(train_genres, train_feats, test_feats, 7); 
+predicted_genres = myKnn_genre(train_genres, train_feats, test_feats, 3); 
 
 % Show genre rate
 g_diff = strcmp(test_genres, predicted_categories);
-mean(g_diff);
+g_diff_mean = mean(g_diff)
 
 % For each track, run K-NN for the specific genre selected.
 for i=1:length(predicted_categories)
@@ -97,7 +99,8 @@ for i=1:length(predicted_categories)
    % Set K
    K = 3;
    estimatedClasses(i) = myKnn(years(indices), train_feats(indices,:), test_feats(i,:), K); 
+   estimatedClasses = estimatedClasses';
 end
 
-diff = abs(estimatedClasses' - test_years);
+diff = abs(estimatedClasses - test_years);
 mean(diff)
