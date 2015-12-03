@@ -160,11 +160,12 @@ end
 
 % Generate the Confusion Matrix
 [C,order] = confusionmat(test_genres(:),estimated_genres(:));
+num_songs_per_row = length(test_genres);
 figure(3);
 imagesc(C);
 title('Confusion Matrix');
 colormap(flipud(gray));  % Grayscale
-textStrings = num2str(C(:),'%0.2f');  % Generate strings for labels
+textStrings = num2str(C(:)./num_songs_per_row*100,'%0.2f');  % Generate strings for labels
 textStrings = strtrim(cellstr(textStrings)); 
 [x,y] = meshgrid(1:7);
 hStrings = text(x(:),y(:),textStrings(:),... 
