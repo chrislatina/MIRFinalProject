@@ -15,13 +15,13 @@ hopSize = 1024;
 
 %%
 % Folder path
-% folderPath = '/Users/chrislatina/Documents/GeorgiaTech/F15/MIR/FinalProject/Dataset';
-folderPath = '/Users/musictechnology/Desktop/Dataset';
+folderPath = '/Users/chrislatina/Documents/GeorgiaTech/F15/MIR/FinalProject/Dataset';
+% folderPath = '/Users/musictechnology/Desktop/Dataset';
 
 %%
 % Read in Data
-% dataPath = '/Users/chrislatina/Documents/Sites/MIRFinalProject/GTZAN60.txt';
-dataPath = '/Users/musictechnology/Desktop/MIRFinalProject/GTZAN60.txt';
+dataPath = '/Users/chrislatina/Documents/Sites/MIRFinalProject/GTZAN60.txt';
+%dataPath = '/Users/musictechnology/Desktop/MIRFinalProject/GTZAN60.txt';
 %%
 % Extract Features -- if already loaded, just load from the file
 if ~exist('features_final.mat', 'file')
@@ -42,6 +42,9 @@ else
     load('spectral_features.mat', 'spectral_features');
 end
 
+% Construct High Dimensional Feature Matrix
+features = [features, spectral_features];
+
 unique_genres = unique(genres);
 num_feat_per_genre = 60;
 
@@ -54,47 +57,67 @@ filesInFolder = 60;
 nSize = size(features,1);
 nSize = nSize / nFold;
 
-% DISTRIBUTED: Interleave vectors
-F1 = features(1:filesInFolder,:); 
-F2 = features(filesInFolder+1:2*filesInFolder,:);
-F3 = features(2*filesInFolder+1:3*filesInFolder,:);
-F4 = features(3*filesInFolder+1:4*filesInFolder,:);
-F5 = features(4*filesInFolder+1:5*filesInFolder,:);
-F6 = features(5*filesInFolder+1:6*filesInFolder,:);
-F7 = features(6*filesInFolder+1:7*filesInFolder,:);
-dist_features = reshape([F1';F2';F3';F4';F5';F6';F7'],13,[])';
+num_features = size(features,2);
 
-G1 = genres(1:filesInFolder,:);
-G2 = genres(filesInFolder+1:2*filesInFolder,:);
-G3 = genres(2*filesInFolder+1:3*filesInFolder,:);
-G4 = genres(3*filesInFolder+1:4*filesInFolder,:);
-G5 = genres(4*filesInFolder+1:5*filesInFolder,:);
-G6 = genres(5*filesInFolder+1:6*filesInFolder,:);
-G7 = genres(6*filesInFolder+1:7*filesInFolder,:);
-dist_labels = reshape([G1';G2';G3';G4';G5';G6';G7'],1,[])';
+% RANDOM
+seed = randperm(size(features,1));
+rand_labels = genres(seed);
+randData = features(seed,:);
+
+% DISTRIBUTED: Interleave vectors
+% F1 = features(1:filesInFolder,:); 
+% F2 = features(filesInFolder+1:2*filesInFolder,:);
+% F3 = features(2*filesInFolder+1:3*filesInFolder,:);
+% F4 = features(3*filesInFolder+1:4*filesInFolder,:);
+% F5 = features(4*filesInFolder+1:5*filesInFolder,:);
+% F6 = features(5*filesInFolder+1:6*filesInFolder,:);
+% F7 = features(6*filesInFolder+1:7*filesInFolder,:);
+% dist_features = reshape([F1';F2';F3';F4';F5';F6';F7'],num_features,[])';
+% 
+% G1 = genres(1:filesInFolder,:);
+% G2 = genres(filesInFolder+1:2*filesInFolder,:);
+% G3 = genres(2*filesInFolder+1:3*filesInFolder,:);
+% G4 = genres(3*filesInFolder+1:4*filesInFolder,:);
+% G5 = genres(4*filesInFolder+1:5*filesInFolder,:);
+% G6 = genres(5*filesInFolder+1:6*filesInFolder,:);
+% G7 = genres(6*filesInFolder+1:7*filesInFolder,:);
+% dist_labels = reshape([G1';G2';G3';G4';G5';G6';G7'],1,[])';
 
 % Do Separation
 for i = 1:nFold
-    % DISTRIBUTED: Interleave vectors  
+    
+    % RANDOM
     s = (i-1)*nSize+1;
     e = i*nSize;
-    test_feat = dist_features(s:e,:);
-    test_labels(:,i) = dist_labels(s:e);
-    train_feat = dist_features;
-    genres = dist_labels;
+    test_feat = randData(s:e,:);
+    test_labels(:,i) = rand_labels(s:e);
+    train_feat = randData;
+    genres = rand_labels;
     train_feat(s:e,:) = [];
     genres(s:e,:) = [];
+
+    % DISTRIBUTED: Interleave vectors  
+%     s = (i-1)*nSize+1;
+%     e = i*nSize;
+%     test_feat = dist_features(s:e,:);
+%     test_labels(:,i) = dist_labels(s:e);
+%     train_feat = dist_features;
+%     genres = dist_labels;
+%     train_feat(s:e,:) = [];
+%     genres(s:e,:) = [];
     
     % Normalize using z-score
     test_feat = (test_feat - repmat(mean(train_feat),size(test_feat,1),1)) ./ repmat(std(train_feat),size(test_feat,1),1);
     train_feat = (train_feat - repmat(mean(train_feat),size(train_feat,1),1)) ./ repmat(std(train_feat),size(train_feat,1),1);
 
     
-    %Run the SVM 
-%      estimatedClasses(:,i) = svm_classify(train_feat, genres, test_feat);
-%     % Run K-NN to calculate distance
-    estimatedClasses(:,i) = myKnn_genre(genres, train_feat(:,fold), test_feat(:,fold), 7);
-%     rate((i-1)*nSize+1:i*nSize,i) = strcmp(estimatedClasses(:,i), test_labels(:,i));
+    %% Run the SVM 
+     estimatedClasses(:,i) = svm_classify(train_feat, genres, test_feat);
+     
+    %% Run K-NN to calculate distance
+    % estimatedClasses(:,i) = myKnn_genre(genres, train_feat(:,fold), test_feat(:,fold), 7);
+    
+    %% Rate
     rate((i-1)*nSize+1:i*nSize,1) = strcmp(estimatedClasses(:,i), test_labels(:,i));
 end
 

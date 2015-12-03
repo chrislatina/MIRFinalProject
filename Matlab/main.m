@@ -3,7 +3,7 @@ clear;
 
 %% Include vl_feat for the svm
 % run('/Users/chrislatina/Documents/GeorgiaTech/F15/Comp Vision/Assignment 4/vlfeat-0.9.20/toolbox/vl_setup')
-run('/Users/musictechnology/Dropbox/Fall_2015/6476CS_CV/Projects/proj3/vlfeat-0.9.20/toolbox/vl_setup')
+% run('/Users/musictechnology/Dropbox/Fall_2015/6476CS_CV/Projects/proj3/vlfeat-0.9.20/toolbox/vl_setup')
 
 %%
 % Extract features for each file
@@ -12,13 +12,13 @@ hopSize = 1024;
 
 %%
 % Folder path
-% folderPath = '/Users/chrislatina/Documents/GeorgiaTech/F15/MIR/FinalProject/Dataset';
-folderPath = '/Users/musictechnology/Desktop/Dataset';
+folderPath = '/Users/chrislatina/Documents/GeorgiaTech/F15/MIR/FinalProject/Dataset';
+% folderPath = '/Users/musictechnology/Desktop/Dataset';
 
 %%
 % Read in Data
-% dataPath = '/Users/chrislatina/Documents/Sites/MIRFinalProject/GTZAN60.txt';
-dataPath = '/Users/musictechnology/Desktop/MIRFinalProject/GTZAN60.txt';
+dataPath = '/Users/chrislatina/Documents/Sites/MIRFinalProject/GTZAN60.txt';
+% dataPath = '/Users/musictechnology/Desktop/MIRFinalProject/GTZAN60.txt';
 %%
 % Extract Features -- if already loaded, just load from the file
 if ~exist('features_final.mat', 'file')
