@@ -70,9 +70,16 @@ for i=2:length(unique_genres)
 end
 
 %%
+% Using SVM to predict the year as a regression
+predicted_years = svm_regression(train_feats, scaleYear(train_years), test_feats);
+
+%%
 % Using SVM to predict the genre
 predicted_categories = svm_classify(train_feats, train_genres, test_feats);
-% predicted_categories = myKnn2(train_genres, train_feats, test_feats, 7); 
+
+%% Use KNN to predict genre for comparison
+% predicted_categories = myKnn_genre(train_genres, train_feats, test_feats, 7); 
+
 % Show genre rate
 g_diff = strcmp(test_genres, predicted_categories);
 mean(g_diff);
