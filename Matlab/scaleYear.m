@@ -5,8 +5,8 @@
 % =========================================================================
 % @retval scaled_year: year value in the range from 0 to 1
 
-function scaled_year = scaleYear(year)
-years = cell2mat(year);
+function scaled_year = scaleYear(years)
+% years = cell2mat(year);
 original_max = max(years);
 original_min = min(years);
 new_max = 1;

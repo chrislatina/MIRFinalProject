@@ -2,8 +2,8 @@ clear;
 
 
 %% Include vl_feat for the svm
-% run('/Users/chrislatina/Documents/GeorgiaTech/F15/Comp Vision/Assignment 4/vlfeat-0.9.20/toolbox/vl_setup')
-run('/Users/musictechnology/Dropbox/Fall_2015/6476CS_CV/Projects/proj3/vlfeat-0.9.20/toolbox/vl_setup')
+run('/Users/chrislatina/Documents/GeorgiaTech/F15/Comp Vision/Assignment 4/vlfeat-0.9.20/toolbox/vl_setup')
+% run('/Users/musictechnology/Dropbox/Fall_2015/6476CS_CV/Projects/proj3/vlfeat-0.9.20/toolbox/vl_setup')
 
 %%
 % Extract features for each file
@@ -37,9 +37,10 @@ num_feat_per_genre = 60;
 
 years = cell2mat(years);
 
-% Randomize features within each genre
-rand_seed = randperm(length(num_feat_per_genre));
+% Generate a random seed
+rand_seed = randperm(num_feat_per_genre);
 
+% Randomize features for each genre
 for i=1:length(unique_genres)
     temp_feat = features((i-1)*60+1:i*60);
     temp_genre= genres((i-1)*60+1:i*60);
@@ -69,9 +70,10 @@ for i=2:length(unique_genres)
     test_years   = vertcat(test_years,years((i-1)*60+51:(i-1)*60+60,:));
 end
 
+scaled_years = scaleYear(train_years);
 %%
 % Using SVM to predict the year as a regression
-predicted_years = svm_regression(train_feats, scaleYear(train_years), test_feats);
+predicted_label = svm_regression(train_feats, scaled_years, test_feats);
 
 %%
 % Using SVM to predict the genre
