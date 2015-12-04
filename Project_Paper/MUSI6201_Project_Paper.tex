@@ -1,0 +1,380 @@
+% Template for ICASSP-2015 paper; to be used with:
+%          spconf.sty  - ICASSP/ICIP LaTeX style file, and
+%          IEEEbib.bst - IEEE bibliography style file.
+% --------------------------------------------------------------------------
+\documentclass{article}
+\usepackage{spconf,amsmath,graphicx}
+\usepackage{hyperref,tabularx}
+
+%\setcounter{secnumdepth}{4}
+
+%\titleformat{\paragraph}
+%{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+%\titlespacing*{\paragraph}
+%{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+% Example definitions.
+% --------------------
+\def\x{{\mathbf x}}
+\def\L{{\cal L}}
+
+% Title.
+% ------
+\title{Computing a Song's Decade}
+
+%
+% Single address.
+% ---------------
+%\name{Author(s) Name(s)\thanks{Thanks to XYZ agency for funding.}}
+%\address{Author Affiliation(s)}
+%
+% For example:
+% ------------
+%\address{School\\
+%	Department\\
+%	Address}
+%
+% Two addresses (uncomment and modify for two-address case).
+% ----------------------------------------------------------
+\twoauthors
+  {Chris Latina}
+	{Georgia Tech Center for Music Technology\\
+	840 McMillan St. Atlanta, GA\\
+	chrisrlatina@gmail.com}
+  {Liang Tang}
+	{Georgia Tech Center for Music Technology\\
+	840 McMillan St. Atlanta, GA\\
+	liangmt@gatech.edu}
+%
+\begin{document}
+%\ninept
+%
+\maketitle
+%
+\begin{abstract}
+Are there new insights through computational methods to the problem of getting song's year? This project, motivated by combining traditional music information retrieval (hereafter referred to as MIR) approach and metadata of song to compute a song's decade.  
+\end{abstract}
+%
+\begin{keywords}
+Year computation, MIR, GTZAN
+\end{keywords}
+%
+\section{Introduction}
+\label{sec:intro}
+
+MIR is an active field of machine learning research. People using online music services are very likely to search for music by genre, style or year, so researchers have attempted to understand how to automatically classify music by genre and style. For instance, overarching genres like rock or disco likely exhibit enough distinction for computers to effectively distinguish between them \cite{diab1musical}.
+
+In that effort, several papers have explored the efficacy of learning algorithms to predict genres. In his paper, George Tzanetakis effectively classified genres on live radio broadcasts using a Gaussian classifier \cite{tzanetakis2002musical}. Mandel used SVM on artist and album-level features to make similar classification as well \cite{mandel2005song}. Also, another study explored mixtures of Gaussians and K-Nearest-Neighbors (hereafter referred to as KNN) for music classification \cite{li2003comparative}. Each of these studies used similar features - Mel-Frequency Cepstral Coefficients (hereafter referred to as MFCC) and chroma features of audio to make the classification.
+
+Discogs is an user-sourced database and marketplace for album releases on vinyl, cassette, CD, and digital formats. Unlike last.fm, the data is extremely complete and accurate because it is heavily moderated. Notably, all releases have a "master format", often chronologically the first release with metadata such as genre, styles (subgenres), and year.
+
+
+%==========================================
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Style in Music}
+Style is a vague term that may be understood in different ways depending on the context in which it is employed. Unlike the majority of other artistic disciplines, music is usually considered as not being able to generate creative work directly from the concrete reality \cite{leichtentritt1945aesthetic}. As a result, style is slightly different in music than in literature, painting or sculpture. According to Dannenberg, it is almost impossible to find any obvious objective meaning, or referent associated with a short melody without words \cite{dannenberg2010style}. Essentially, every aspect of melody that communicates with listener is an aspect of style. One would say style is everything in music, or everything in music is style.
+
+%==========================================
+\section{Algorithm Overview \& description}
+\label{sec:algorithm}
+
+\subsection{Audio Feature Extraction}
+\label{subsec:feature}
+
+\subsubsection{Timbral Texture Features}
+\label{subsubsec:timbral}
+
+
+MFCC are perceptually motivated features that are based on the STFT.
+
+\begin{equation*}
+{\mathrm{MFCC}}(n)	= \sum\limits_{k' = 1}^{\mathcal{K}'}{\log\big( |X'(k',n)|\big)\cdot \cos\left( j\cdot\left(k'-\frac{1}{2} \right)\frac{\pi}{\mathcal{K}'} \right)}			
+\end{equation*}
+
+The Spectral Centroid (hereafter referred to as SC) is defined as the center of gravity of the magnitude spectrum of the STFT.
+
+\begin{equation*}\label{eq:centroid}
+\mathrm{SC}(n) = \frac{\sum\limits_{k = 0}^{\mathcal{K}/2-1}{k\cdot |X(k,n)|^2}}{\sum\limits_{k = 0}^{N/2-1}{|X(k,n)|^2}}
+			\end{equation*}
+			
+The centroid is a measure of spectral shape and higher centroid values correspond to "brighter" textures with more high frequencies.
+
+\subsubsection{Instantaneous Feature}
+\label{subsubsec:instantaneous}
+
+%\paragraph{Spectral Flux}
+The Spectral Flux (hereafter referred to as SF) measures the amount of change of the spectral shape. It is defined as the average difference between consecutive STFT frames: (should be an equation here).
+
+
+\begin{eqnarray*}
+{\mathrm{SF}}(n, \beta) &=& \frac{\sqrt[\beta]{\sum\limits_{k = 0}^{\mathcal{K}/2-1}{\left(|X(k,n)|-|X(k,n-1)|\right)^\beta}}}{{\mathcal{K}}{/2}} 
+\end{eqnarray*}
+
+\subsection{Dataset Creation}
+\label{subsec:dataset}
+In this research, GTZAN was chosen as the basic database. It is a database of music created by George Tzanetakis specifically for machine learning analysis of genre classification problems. Though, this dataset was argued to have non-negligible issues such as "album effect", and repeated audio samples which would negatively influence the accuracy of the classification \cite{sturm2013gtzan}, it still can be seen as the default choice in the research area of music genre classification. Figure 1 represents the degree of activity of GTZAN.
+
+\begin{figure}[htb]
+
+\begin{minipage}[b]{1.0\linewidth}
+  \centering
+  \centerline{\includegraphics[width=8.5cm]{figures/GTZAN1.png}}
+  \vspace{0.5cm}
+  \caption{ Annual numbers of published works in MGR with experimental components, divided into ones that use and do not use GTZAN \cite{sturm2013gtzan}}
+\label{fig:figure1}
+\end{minipage}
+\end{figure}
+
+
+\subsection{Query Metadata}
+\label{subsec:metadata}
+Discog.....
+
+
+
+\subsection{Classification}
+\label{subsec:classification}
+For classification, two approaches which are based off of Support Vector Machine (hereafter referred to as SVM) and KNN were used. The idea of applying two different approaches to achieve year computation is not only trying to maximize the accuracy of year computation, but comparing the suitability of this two basic statistical pattern recognition (hereafter referred to as SPR) classifiers. Essentially, SPR is applied to estimate the probability density function (hereafter referred to as PDF) for the feature vectors of each class. 
+%===========================================
+\section{Evaluation}
+\label{sec:evaluation}
+
+
+
+
+\subsection{Methodology}
+\label{subsec:methodology}
+
+\subsubsection{N-fold Validation}
+N-fold was applied in the research in order to perform multiple iteration of classification for evaluation. Given to the fact that the dataset contains 8 genres with 60 songs each (420 songs in total), N was set to 7. This way, for each fold, the training set contains 350 songs and the test set contains 70 songs, with 10 from each genre.
+
+\subsubsection{Segmentation of Data}
+The data was segmented into training and testing pools using two techniques. The results were quite different and tie into some fundamental concepts of dataset creation. One approach was an interleaved distribution. The second was a randomized distribution. 
+
+For the interleaved distribution, the feature set was read in order adding one song from each genre at a time. Feature set was read from a tab-delimted file containing the song?s metadata including artist name, album, title, genre, year and filename ordered by genre, artist, and then album alphabetically . Because there were instances of multiple songs by an artist from the same album, the distributed segmentation approach separates songs from one album occurring in both the training and test set, thus removing the risk of the ``artist effect", ``album effect". In his paper, Seyerlehner argues that it is relatively easy to identify songs by one and the same artist using audio similarity algorithm \cite{seyerlehner2010fusing}. This effect is kown as artist effect. In some cases, even album-specific production dffects are reflected in the spectral representation of songs, which is respectively called ``album effect". Obviously, songs by the same artist will tend to belong to the same genre, and the ability to recognize the genre by specific production effect is not what this research intend to measure. However, this also the worst case scenario, because the training and test set will always be very different from each other. 
+
+For the randomized distribution, a seed is generated for the entire feature set and applied to all songs and metadata, completely randomizing the order. This creates a potentially even distribution of genres within each fold for the training and test sets. It greatly increases the chance of the album effect, however, because songs from the same album that were previously only in the training set now can appear in the test set as well.
+
+\subsection{Metrics}
+\label{subsec:metrics}
+%============================================
+\section{conclusion}
+\label{sec:conclusion}
+
+\subsection{}
+\label{subsec:}
+
+\subsection{}
+
+%============================================
+\section{Future Work}
+\label{sec: future}
+
+\subsection{Feature Extraction}
+
+\subsection{Classification}
+
+\subsection{Data set enhancement}
+
+%============================================
+%\section{Formatting your paper}
+%\label{sec:format}
+%
+%All printed material, including text, illustrations, and charts, must be kept
+%within a print area of 7 inches (178 mm) wide by 9 inches (229 mm) high. Do
+%not write or print anything outside the print area. The top margin must be 1
+%inch (25 mm), except for the title page, and the left margin must be 0.75 inch
+%(19 mm).  All {\it text} must be in a two-column format. Columns are to be 3.39
+%inches (86 mm) wide, with a 0.24 inch (6 mm) space between them. Text must be
+%fully justified.
+%
+%\section{PAGE TITLE SECTION}
+%\label{sec:pagestyle}
+%
+%The paper title (on the first page) should begin 1.38 inches (35 mm) from the
+%top edge of the page, centered, completely capitalized, and in Times 14-point,
+%boldface type.  The authors' name(s) and affiliation(s) appear below the title
+%in capital and lower case letters.  Papers with multiple authors and
+%affiliations may require two or more lines for this information. Please note
+%that papers should not be submitted blind; include the authors' names on the
+%PDF.
+%
+%\section{TYPE-STYLE AND FONTS}
+%\label{sec:typestyle}
+%
+%To achieve the best rendering both in printed proceedings and electronic proceedings, we
+%strongly encourage you to use Times-Roman font.  In addition, this will give
+%the proceedings a more uniform look.  Use a font that is no smaller than nine
+%point type throughout the paper, including figure captions.
+%
+%In nine point type font, capital letters are 2 mm high.  {\bf If you use the
+%smallest point size, there should be no more than 3.2 lines/cm (8 lines/inch)
+%vertically.}  This is a minimum spacing; 2.75 lines/cm (7 lines/inch) will make
+%the paper much more readable.  Larger type sizes require correspondingly larger
+%vertical spacing.  Please do not double-space your paper.  TrueType or
+%Postscript Type 1 fonts are preferred.
+%
+%The first paragraph in each section should not be indented, but all the
+%following paragraphs within the section should be indented as these paragraphs
+%demonstrate.
+%
+%\section{MAJOR HEADINGS}
+%\label{sec:majhead}
+%
+%Major headings, for example, "1. Introduction", should appear in all capital
+%letters, bold face if possible, centered in the column, with one blank line
+%before, and one blank line after. Use a period (".") after the heading number,
+%not a colon.
+%
+%\subsection{Subheadings}
+%\label{ssec:subhead}
+%
+%Subheadings should appear in lower case (initial word capitalized) in
+%boldface.  They should start at the left margin on a separate line.
+% 
+%\subsubsection{Sub-subheadings}
+%\label{sssec:subsubhead}
+%
+%Sub-subheadings, as in this paragraph, are discouraged. However, if you
+%must use them, they should appear in lower case (initial word
+%capitalized) and start at the left margin on a separate line, with paragraph
+%text beginning on the following line.  They should be in italics.
+%
+%\section{PRINTING YOUR PAPER}
+%\label{sec:print}
+%
+%Print your properly formatted text on high-quality, 8.5 x 11-inch white printer
+%paper. A4 paper is also acceptable, but please leave the extra 0.5 inch (12 mm)
+%empty at the BOTTOM of the page and follow the top and left margins as
+%specified.  If the last page of your paper is only partially filled, arrange
+%the columns so that they are evenly balanced if possible, rather than having
+%one long column.
+%
+%In LaTeX, to start a new column (but not a new page) and help balance the
+%last-page column lengths, you can use the command ``$\backslash$pagebreak'' as
+%demonstrated on this page (see the LaTeX source below).
+%
+%\section{PAGE NUMBERING}
+%\label{sec:page}
+%
+%Please do {\bf not} paginate your paper.  Page numbers, session numbers, and
+%conference identification will be inserted when the paper is included in the
+%proceedings.
+%
+%\section{ILLUSTRATIONS, GRAPHS, AND PHOTOGRAPHS}
+%\label{sec:illust}
+%
+%Illustrations must appear within the designated margins.  They may span the two
+%columns.  If possible, position illustrations at the top of columns, rather
+%than in the middle or at the bottom.  Caption and number every illustration.
+%All halftone illustrations must be clear black and white prints.  Colors may be
+%used, but they should be selected so as to be readable when printed on a
+%black-only printer.
+%
+%Since there are many ways, often incompatible, of including images (e.g., with
+%experimental results) in a LaTeX document, below is an example of how to do
+%this \cite{Lamp86}.
+%
+%\section{FOOTNOTES}
+%\label{sec:foot}
+%
+%Use footnotes sparingly (or not at all!) and place them at the bottom of the
+%column on the page on which they are referenced. Use Times 9-point type,
+%single-spaced. To help your readers, avoid using footnotes altogether and
+%include necessary peripheral observations in the text (within parentheses, if
+%you prefer, as in this sentence).
+
+% Below is an example of how to insert images. Delete the ``\vspace'' line,
+% uncomment the preceding line ``\centerline...'' and replace ``imageX.ps''
+% with a suitable PostScript file name.
+% -------------------------------------------------------------------------
+%\begin{figure}[htb]
+%
+%\begin{minipage}[b]{1.0\linewidth}
+%  \centering
+%  \centerline{\includegraphics[width=8.5cm]{image1}}
+%%  \vspace{2.0cm}
+%  \centerline{(a) Result 1}\medskip
+%\end{minipage}
+%%
+%\begin{minipage}[b]{.48\linewidth}
+%  \centering
+%  \centerline{\includegraphics[width=4.0cm]{image3}}
+%%  \vspace{1.5cm}
+%  \centerline{(b) Results 3}\medskip
+%\end{minipage}
+%\hfill
+%\begin{minipage}[b]{0.48\linewidth}
+%  \centering
+%  \centerline{\includegraphics[width=4.0cm]{image4}}
+%%  \vspace{1.5cm}
+%  \centerline{(c) Result 4}\medskip
+%\end{minipage}
+%%
+%\caption{Example of placing a figure with experimental results.}
+%\label{fig:res}
+%%
+%\end{figure}
+
+
+% To start a new column (but not a new page) and help balance the last-page
+% column length use \vfill\pagebreak.
+% -------------------------------------------------------------------------
+%\vfill
+%\pagebreak
+
+%\section{COPYRIGHT FORMS}
+%\label{sec:copyright}
+%
+%You must submit your fully completed, signed IEEE electronic copyright release
+%form when you submit your paper. We {\bf must} have this form before your paper
+%can be published in the proceedings.
+%
+%\section{RELATION TO PRIOR WORK}
+%\label{sec:prior}
+%
+%The text of the paper should contain discussions on how the paper's
+%contributions are related to prior work in the field. It is important
+%to put new work in  context, to give credit to foundational work, and
+%to provide details associated with the previous work that have appeared
+%in the literature. This discussion may be a separate, numbered section
+%or it may appear elsewhere in the body of the manuscript, but it must
+%be present.
+%
+%You should differentiate what is new and how your work expands on
+%or takes a different path from the prior studies. An example might
+%read something to the effect: "The work presented here has focused
+%on the formulation of the ABC algorithm, which takes advantage of
+%non-uniform time-frequency domain analysis of data. The work by
+%Smith and Cohen \cite{Lamp86} considers only fixed time-domain analysis and
+%the work by Jones et al \cite{C2} takes a different approach based on
+%fixed frequency partitioning. While the present study is related
+%to recent approaches in time-frequency analysis [3-5], it capitalizes
+%on a new feature space, which was not considered in these earlier
+%studies."
+
+\vfill\pagebreak
+
+%\section{REFERENCES}
+%\label{sec:refs}
+%
+%List and number all bibliographical references at the end of the
+%paper. The references can be numbered in alphabetic order or in
+%order of appearance in the document. When referring to them in
+%the text, type the corresponding reference number in square
+%brackets as shown at the end of this sentence \cite{C2}. An
+%additional final page (the fifth page, in most cases) is
+%allowed, but must contain only references to the prior
+%literature.
+
+% References should be produced using the bibtex program from suitable
+% BiBTeX files (here: strings, refs, manuals). The IEEEbib.bst bibliography
+% style fiåle from IEEE produces unsorted bibliography list.
+% -------------------------------------------------------------------------
+\bibliographystyle{IEEEbib}
+%\bibliographystyle{ieeetr}
+\bibliography{refs}
+
+\end{document}

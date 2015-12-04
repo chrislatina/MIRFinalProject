@@ -1,0 +1,53 @@
+\begin{thebibliography}{1}
+
+\bibitem{diab1musical}
+Omar Diab, Anthony Manero, and Reid Watson,
+\newblock ``Musical genre tag classification with curated and crowdsourced
+  datasets,'' .
+
+\bibitem{tzanetakis2002musical}
+George Tzanetakis and Perry Cook,
+\newblock ``Musical genre classification of audio signals,''
+\newblock {\em Speech and Audio Processing, IEEE transactions on}, vol. 10, no.
+  5, pp. 293--302, 2002.
+
+\bibitem{mandel2005song}
+Michael~I Mandel and Daniel~PW Ellis,
+\newblock ``Song-level features and support vector machines for music
+  classification,''
+\newblock in {\em ISMIR 2005: 6th International Conference on Music Information
+  Retrieval: Proceedings: Variation 2: Queen Mary, University of London \&
+  Goldsmiths College, University of London, 11-15 September, 2005}. Queen Mary,
+  University of London, 2005, pp. 594--599.
+
+\bibitem{li2003comparative}
+Tao Li, Mitsunori Ogihara, and Qi~Li,
+\newblock ``A comparative study on content-based music genre classification,''
+\newblock in {\em Proceedings of the 26th annual international ACM SIGIR
+  conference on Research and development in informaion retrieval}. ACM, 2003,
+  pp. 282--289.
+
+\bibitem{leichtentritt1945aesthetic}
+Hugo Leichtentritt,
+\newblock ``Aesthetic ideas as the basis of musical styles,''
+\newblock {\em The Journal of Aesthetics and Art Criticism}, vol. 4, no. 2, pp.
+  65--73, 1945.
+
+\bibitem{dannenberg2010style}
+Roger~B Dannenberg,
+\newblock ``Style in music,''
+\newblock in {\em The structure of style}, pp. 45--57. Springer, 2010.
+
+\bibitem{sturm2013gtzan}
+Bob~L Sturm,
+\newblock ``The gtzan dataset: Its contents, its faults, their effects on
+  evaluation, and its future use,''
+\newblock {\em arXiv preprint arXiv:1306.1461}, 2013.
+
+\bibitem{seyerlehner2010fusing}
+Klaus Seyerlehner, Gerhard Widmer, and Tim Pohle,
+\newblock ``Fusing block-level features for music similarity estimation,''
+\newblock in {\em Proc. of the 13th Int. Conference on Digital Audio Effects
+  (DAFx-10)}, 2010, pp. 225--232.
+
+\end{thebibliography}
