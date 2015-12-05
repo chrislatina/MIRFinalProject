@@ -4,7 +4,7 @@ data = readtable(dataPath,'Delimiter','tab','ReadVariableNames',false);
 num_tracks = size(data,1);
 
 %Construct feature matrix and genre vector
-spectral_features = zeros(num_tracks, 4);
+spectral_features = zeros(num_tracks, 28);
 
 % Open each file
 for i = 1:num_tracks;
@@ -28,8 +28,10 @@ for i = 1:num_tracks;
     
     % Extract features per block
     sc = zeros(numBlocks, 1);
+    pc = zeros(numBlocks, 12);
     for j = 1: numBlocks
         sc (j) = mySC(mag_freq_blocked_x(:, j), Fs);
+        pc (j,:) = myPC(mag_freq_blocked_x(:, j), Fs)';
     end
     
     sf = mySF(mag_freq_blocked_x);
@@ -38,8 +40,9 @@ for i = 1:num_tracks;
     spectral_features(i, 2) = std(sf);        
     spectral_features(i, 3) = mean(sc);
     spectral_features(i, 4) = std(sc);
-
-end
+    spectral_features(i, 5:16) = mean(pc,1);
+    spectral_features(i, 17:end) = std(pc,1);
+ end
 
 genres = genres';
 years = years';
