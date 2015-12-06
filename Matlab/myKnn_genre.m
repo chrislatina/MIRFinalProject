@@ -1,4 +1,4 @@
-function [estimatedClass] = myKnn2(trainLabel, trainData, testData, K)
+function [estimatedClass] = myKnn_genre(trainLabel, trainData, testData, K)
 % k-Nearest Neighbor (Knn)
 
 num_train = size(trainData,1);

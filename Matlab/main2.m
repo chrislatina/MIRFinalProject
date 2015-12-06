@@ -46,7 +46,11 @@ end
 % Construct High Dimensional Feature Matrix
 features = [features, spectral_features];
 
-[ rate, labels] = myNFold(years, genres, features, 6, [4:8 27], 3);
+%4:8 27 
+[ diff_genres, diff_years] = myNFold(years, genres, features, 6, [1:30], 3);
+
+a_genre_rate = mean(diff_genres(:));
+a_year_rate = mean(diff_years(:));
 
 % Generate the Confusion Matrix
 % [C,order] = confusionmat(test_genres(:),estimated_genres(:));

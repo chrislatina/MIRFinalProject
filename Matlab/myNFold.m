@@ -1,4 +1,4 @@
-function [ rate, labels] = myNFold( years, genres, features, nFold, fold, K)
+function [ diff_genres, diff_years] = myNFold( years, genres, features, nFold, fold, K)
 
 features = features(:,fold);
 
@@ -95,26 +95,26 @@ for i = 1:nFold
     % estimatedClasses(:,i) = myKnn_genre(train_genres, train_feat(:,fold), test_feat(:,fold), 7);
     
     %% For each track, calculate year: run K-NN for the specific genre selected.
-%     for j=1:length(estimated_genres)
-% 
-%        %Get all tracks in training data of current genre
-%        predicted_genre = estimated_genres{i};
-%        indexC = strfind(train_genres, predicted_genre);
-%        indices = find(not(cellfun('isempty', indexC)));
-% 
-%        % Set K
-%        K = 3;
-%        estimated_years(:,j) = myKnn(years(indices), train_feat(indices,:), test_feat(j,:), K); 
-%     end
+    for j=1:length(estimated_genres)
+
+       %Get all tracks in training data of current genre
+       predicted_genre = estimated_genres{i};
+       indexC = strfind(train_genres, predicted_genre);
+       indices = find(not(cellfun('isempty', indexC)));
+       
+%        indices = 1:length(estimated_genres);
+
+       % Set K
+       K = 9;
+       estimated_years(:,j) = myKnn(years(indices), train_feat(indices,:), test_feat(j,:), K); 
+    end
     
     %% Genre Rate
-    rate((i-1)*nSize+1:i*nSize,1) = strcmp(estimated_genres(:,i), test_genres(:,i));
+    diff_genres((i-1)*nSize+1:i*nSize,1) = strcmp(estimated_genres(:,i), test_genres(:,i));
     
     %% Year Rate
     diff_years(:,i) = abs(estimated_years(:,i) - test_years(:,i));
     
 end
 
-rate = mean(rate(:));
-labels = estimated_years;
 end
