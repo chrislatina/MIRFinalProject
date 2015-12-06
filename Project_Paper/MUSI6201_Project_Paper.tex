@@ -70,7 +70,7 @@ Year computation, MIR, GTZAN
 
 MIR is an active field of machine learning research. Users of online music services are very likely to search for music by genre or style, so researchers have attempted to understand how to automatically classify music by these labels. For instance, overarching genres like rock or disco likely exhibit enough distinction for computers to effectively distinguish between them \cite{diab1musical}.
 
-In that effort, several papers have explored the efficacy of learning algorithms to predict genres. In his paper, George Tzanetakis effectively classified genres on live radio broadcasts using a Gaussian classifier \cite{tzanetakis2002musical}. Mandel used Support Vector Machine (hereafter referred to as SVM) on artist and album-level features to make similar classification as well \cite{mandel2005song}. Also, another study explored mixtures of Gaussians and K-Nearest-Neighbors (hereafter referred to as KNN) for music classification \cite{li2003comparative}. Each of these studies used similar features - Mel-Frequency Cepstral Coefficients (hereafter referred to as MFCC) and chroma features of audio to make the classification.
+In that effort, several papers have explored the efficacy of learning algorithms to predict genres. In his paper, George Tzanetakis effectively classified genres on live radio broadcasts using a Gaussian classifier \cite{tzanetakis2002musical}. Mandel used Support Vector Machine (hereafter referred to as \textit{SVM}) on artist and album-level features to make similar classification as well \cite{mandel2005song}. Also, another study explored mixtures of Gaussians and K-Nearest-Neighbors (hereafter referred to as \textit{KNN}) for music classification \cite{li2003comparative}. Each of these studies used similar features - Mel-Frequency Cepstral Coefficients (hereafter referred to as \textit{MFCC}) and chroma features of audio to make the classification.
 
 Besides, dataset working as not only training but also testing tool for machine learning model plays significant role without doubt. Many datasets that exist for genre classification but only contain the minimum amount of information, namely the audio snippet and a label. Recently, researchers are taking effort to create more complete and accurate dataset in different ways. One of them is using music metadata as supplementary to the existing data in terms of providing music-related information like the name of the song, and album, also the year and price of release.
 
@@ -114,7 +114,7 @@ MFCC are perceptually motivated features that are based on the STFT.
 {\mathrm{MFCC}}(n)	= \sum\limits_{k' = 1}^{\mathcal{K}'}{\log\big( |X'(k',n)|\big)\cdot \cos\left( j\cdot\left(k'-\frac{1}{2} \right)\frac{\pi}{\mathcal{K}'} \right)}			
 \end{equation*}
 
-The Spectral Centroid (hereafter referred to as SC) is defined as the center of gravity of the magnitude spectrum of the STFT.
+The Spectral Centroid (hereafter referred to as \textit{SC}) is defined as the center of gravity of the magnitude spectrum of the STFT.
 
 \begin{equation*}\label{eq:centroid}
 \mathrm{SC}(n) = \frac{\sum\limits_{k = 0}^{\mathcal{K}/2-1}{k\cdot |X(k,n)|^2}}{\sum\limits_{k = 0}^{N/2-1}{|X(k,n)|^2}}
@@ -126,7 +126,7 @@ The centroid is a measure of spectral shape and higher centroid values correspon
 %\label{subsubsec:instantaneous}
 
 %\paragraph{Spectral Flux}
-The Spectral Flux (hereafter referred to as SF) measures the amount of change of the spectral shape. It is defined as the average difference between consecutive STFT frames: (should be an equation here).
+The Spectral Flux (hereafter referred to as \textit{SF}) measures the amount of change of the spectral shape. It is defined as the average difference between consecutive STFT frames: (should be an equation here).
 
 
 \begin{eqnarray*}
@@ -165,7 +165,7 @@ Discog.....
 
 \subsection{Classification}
 \label{subsec:classification}
-For classification, two approaches which are based off of SVM and KNN were used. The idea of applying two different approaches to achieve year computation is not only trying to maximize the accuracy of year computation, but comparing the suitability of this two basic statistical pattern recognition (hereafter referred to as SPR) classifiers. Essentially, SPR is applied to estimate the probability density function (hereafter referred to as PDF) for the feature vectors of each class. 
+For classification, two approaches which are based off of SVM and KNN were used. The idea of applying two different approaches to achieve year computation is not only trying to maximize the accuracy of year computation, but comparing the suitability of this two basic statistical pattern recognition (hereafter referred to as \textit{SPR}) classifiers. Essentially, SPR is applied to estimate the probability density function (hereafter referred to as \textit{PDF}) for the feature vectors of each class. 
 %===========================================
 \section{Evaluation}
 \label{sec:evaluation}
