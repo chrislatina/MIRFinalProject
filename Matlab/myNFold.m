@@ -102,29 +102,30 @@ for i = 1:nFold
 
     
     %% Run the SVM for Genre
-%     estimated_genres(:,i) = svm_classify(train_feat, train_genres, test_feat);
+     estimated_genres(:,i) = svm_classify(train_feat, train_genres, test_feat);
      
     %% Run SVM for Year
 %     estimated_years(:,i) = svm_regression(train_feat, scaleYear(train_years), test_feat,scaleYear(test_years(:,i)));
 %     estimated_years(:,i) = reScaleYear(estimated_years(:,i));
 
-    %% Run K-NN to calculate Genre distance
-    [estimated_genres(:,i), estimated_years(:,i)] = myKnn_genre(train_genres, train_feat, test_feat, 7, train_years);
+    %% Run K-NN to calculate Year and Genre distance
+%     [estimated_genres(:,i), estimated_years(:,i)] = myKnn_genre(train_genres, train_feat, test_feat, 7, train_years);
     
     %% For each track, calculate year: run K-NN for the specific genre selected.
-%     for j=1:length(estimated_genres)
-% 
-%        %Get all tracks in training data of current genre
-%        predicted_genre = estimated_genres{i};
-%        indexC = strfind(train_genres, predicted_genre);
-%        indices = find(not(cellfun('isempty', indexC)));
-%        
-% %       indices = 1:length(estimated_genres);
-% 
-%        % Set K
-%        K = 9;
-%        estimated_years(:,j) = myKnn(train_years(indices), train_feat(indices,:), test_feat(j,:), K); 
-%     end
+    for j=1:length(estimated_genres)
+
+       %Get all tracks in training data of current genre
+       predicted_genre = test_genres{i};
+       
+       % Or use ground thruth
+%        predicted_genre = test_genres{i};
+       indexC = strfind(train_genres, predicted_genre);
+       indices = find(not(cellfun('isempty', indexC)));
+       
+       % Set K
+       K = 9;
+       estimated_years(:,j) = myKnn(train_years(indices), train_feat(indices,:), test_feat(j,:), K); 
+    end
     
     %% Genre Rate
     diff_genres((i-1)*nSize+1:i*nSize,1) = strcmp(estimated_genres(:,i), test_genres(:,i));

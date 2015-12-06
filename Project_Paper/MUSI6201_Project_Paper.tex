@@ -177,9 +177,21 @@ We tested four variations on the KNN and SVM algorithms for each of the two segm
 
 \subsubsection{SVM using Regression} 
 
-The SVM Regression was performed on the year data only, as genres can only be classified discretely. We scaled the years from the range of 1927-2015 to a range of 0-1. Using libsvm with regression settings of a nu-SVR with a polynomial kernel, a nu value of 0.5, and a default cost parameter of 1. Combining the mean and standard deviation of MFCCs gave the most successful results. Our average mean error in calculating the year was 12.821 years for the interleaved distribution and 10.425 years for the random distribution.  
+The SVM Regression was performed on the year data only, as genres can only be classified discretely. We scaled the years from the range of 1927-2015 to a range of 0-1. Using libsvm with regression settings of a nu-SVR with a polynomial kernel, a nu value of 0.5, and a default cost parameter of 1. Combining the mean and standard deviation of MFCCs gave the most successful results. Our average mean error in calculating the year was 12.754 years for the interleaved segmentation and 10.425 years for the randomized segmentation.  
 
-\subsubsection{SVM } 
+\subsubsection{KNN of Year}
+
+The second approach used only the KNN directly on the year label, with no genre influence. This was surprisingly the simplest but most effective result. We achieved our best results using a K value of 7 with only the mean of MFCCs as features. This resulted in a mean error of 8.751 years and 8.015 years for the interleaved segmentation and randomized segmentation respectively. Our KNN algorithm, uses a weighting function calculated by the euclidean distance as a method to give priority over closer results. 
+
+\subsubsection{Hierarchical Model: SVM and KNN } 
+Our third approach make use of both the SVM and KNN models in a hierarchical manner. First we used the the SVM to classify the genres using both the mean and standard deviation of MFCCs and our spectral features. Prior to refactoring our dataset, we achieved results of 55.4\% and 66.4\% accuracy for the interleaved and randomized segmentations respectively. After refactoring, however we saw our results decrease, due to the album effect. Since we intentionally targeted repeat songs and full albums present in the GTZAN dataset, our distribution of features expanded within each genre making it more difficult for the SVM to accurately perform classification. After refactoring, the accuracy for classifying genre was 51.5\% and 61.0\% for the interleaved and randomized segmentations respectively. 
+
+After classifying genre, we used the predicted genre for each test song and ran KNN to find the nearest neighbors to compute the year. The selection used to run KNN, however, only found the nearest neighbors within the genre predicted for each song. IE, if we predicted a song to be country, KNN only selects the country songs in the current training fold. Using a value of K=9 gave the best results. Our average mean error in calculating the year was 12.132 and 11.602 years for interleaved segmentation and randomized segmentation respectively. 
+
+\subsubsection{Hierarchical Model: KNN with Ground Truth Genre} 
+
+The final approach removed genre prediction and simply used the ground truth metadata of the test set. The KNN was run again for each audio clip in the test set against using the actual genre metadata for that track. Again, it limited the selection of features from the training set to those that matched the clip's genre. This showed improvement over both the predicted hierarchical model and the SVM using Regression techniques. After tuning the feature set to use only the mean MFCCS numbers 6 through 12, we achieved an average mean error of 12.412 and 11.926 years for interleaved segmentation and randomized segmentation respectively. Interestingly enough, the result was slightly worse than using the trained genre rather than the ground truth. Realizing that optimizing the features selected for the genre when it is not actually used, we experimented with modifying the active features to tune it to the years. We found that using only mean MFCCs 6 through 12 resulted in a mean error of 
+11.136 and 11.670 years for interleaved segmentation and randomized segmentation respectively. 
 
 %============================================
 \section{conclusion}
