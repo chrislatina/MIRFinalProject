@@ -71,30 +71,30 @@ dist_years = reshape([Y1';Y2';Y3';Y4';Y5';Y6';Y7'],1,[])';
 for i = 1:nFold
     
     % RANDOM
-%     s = (i-1)*nSize+1;
-%     e = i*nSize;
-%     test_feat = randData(s:e,:);
-%     test_genres(:,i) = rand_genres(s:e);
-%     test_years(:,i) = rand_years(s:e);
-%     train_feat = randData;
-%     train_genres = rand_genres;
-%     train_years = rand_years;
-%     train_feat(s:e,:) = [];
-%     train_genres(s:e,:) = [];
-%     train_years(s:e,:) = [];
-%     
-    % DISTRIBUTED: Interleave vectors  
     s = (i-1)*nSize+1;
     e = i*nSize;
-    test_feat = dist_features(s:e,:);
-    test_genres(:,i) = dist_genres(s:e);
-    test_years(:,i) = dist_years(s:e);
-    train_feat = dist_features;
-    train_genres = dist_genres;
-    train_years = dist_years;
+    test_feat = randData(s:e,:);
+    test_genres(:,i) = rand_genres(s:e);
+    test_years(:,i) = rand_years(s:e);
+    train_feat = randData;
+    train_genres = rand_genres;
+    train_years = rand_years;
     train_feat(s:e,:) = [];
     train_genres(s:e,:) = [];
     train_years(s:e,:) = [];
+%     
+    % DISTRIBUTED: Interleave vectors  
+%     s = (i-1)*nSize+1;
+%     e = i*nSize;
+%     test_feat = dist_features(s:e,:);
+%     test_genres(:,i) = dist_genres(s:e);
+%     test_years(:,i) = dist_years(s:e);
+%     train_feat = dist_features;
+%     train_genres = dist_genres;
+%     train_years = dist_years;
+%     train_feat(s:e,:) = [];
+%     train_genres(s:e,:) = [];
+%     train_years(s:e,:) = [];
     
     % Normalize using z-score
     test_feat = (test_feat - repmat(mean(train_feat),size(test_feat,1),1)) ./ repmat(std(train_feat),size(test_feat,1),1);
@@ -133,5 +133,27 @@ for i = 1:nFold
     diff_years(:,i) = abs(estimated_years(:,i) - test_years(:,i));
     
 end
+% Generate the Confusion Matrix
+[C,order] = confusionmat(test_genres(:),estimated_genres(:));
+num_songs_per_row = length(test_genres);
+figure(3);
+imagesc(C);
+title('Confusion Matrix');
+colormap(flipud(gray));  % Grayscale
+textStrings = num2str(C(:)./num_songs_per_row*100,'%0.2f');  % Generate strings for labels
+textStrings = strtrim(cellstr(textStrings)); 
+[x,y] = meshgrid(1:7);
+hStrings = text(x(:),y(:),textStrings(:),... 
+                'HorizontalAlignment','center');
+midValue = mean(get(gca,'CLim')); 
+textColors = repmat(C(:) > midValue,1,3);
+set(hStrings,{'Color'},num2cell(textColors,2));
+
+set(gca,'XTick',1:7,...                    
+        'XTickLabel',{order{1}, order{2}, order{3}, order{4}, order{5}, order{6}, order{7}},...
+        'YTick',1:7,...
+        'YTickLabel',{order{1}, order{2}, order{3}, order{4}, order{5}, order{6}, order{7}},...
+        'TickLength',[0 0]);
+% end
 
 end

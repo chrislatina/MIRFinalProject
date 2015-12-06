@@ -51,29 +51,3 @@ features = [features, spectral_features];
 
 a_genre_rate = mean(diff_genres(:));
 a_year_rate = mean(diff_years(:));
-
-% Generate the Confusion Matrix
-% [C,order] = confusionmat(test_genres(:),estimated_genres(:));
-% num_songs_per_row = length(test_genres);
-% figure(3);
-% imagesc(C);
-% title('Confusion Matrix');
-% colormap(flipud(gray));  % Grayscale
-% textStrings = num2str(C(:)./num_songs_per_row*100,'%0.2f');  % Generate strings for labels
-% textStrings = strtrim(cellstr(textStrings)); 
-% [x,y] = meshgrid(1:7);
-% hStrings = text(x(:),y(:),textStrings(:),... 
-%                 'HorizontalAlignment','center');
-% midValue = mean(get(gca,'CLim')); 
-% textColors = repmat(C(:) > midValue,1,3);
-% set(hStrings,{'Color'},num2cell(textColors,2));
-% 
-% set(gca,'XTick',1:7,...                    
-%         'XTickLabel',{order{1}, order{2}, order{3}, order{4}, order{5}, order{6}, order{7}},...
-%         'YTick',1:7,...
-%         'YTickLabel',{order{1}, order{2}, order{3}, order{4}, order{5}, order{6}, order{7}},...
-%         'TickLength',[0 0]);
-% 
-% genre_rate = mean(rate);
-% year_rate = mean(mean(diff_years,1));
-% % end
