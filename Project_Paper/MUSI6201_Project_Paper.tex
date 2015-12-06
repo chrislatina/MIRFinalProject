@@ -72,20 +72,24 @@ MIR is an active field of machine learning research. Users of online music servi
 
 In that effort, several papers have explored the efficacy of learning algorithms to predict genres. In his paper, George Tzanetakis effectively classified genres on live radio broadcasts using a Gaussian classifier \cite{tzanetakis2002musical}. Mandel used Support Vector Machine (hereafter referred to as SVM) on artist and album-level features to make similar classification as well \cite{mandel2005song}. Also, another study explored mixtures of Gaussians and K-Nearest-Neighbors (hereafter referred to as KNN) for music classification \cite{li2003comparative}. Each of these studies used similar features - Mel-Frequency Cepstral Coefficients (hereafter referred to as MFCC) and chroma features of audio to make the classification.
 
-Besides, dataset as not only training but also testing tool for machine learning model plays significant role without doubt. Many datasets that exist for genre classification but only contain the minimum amount of information, namely the audio snippet and a label. We used a modified version of the GTZAN dataset augmented by metadata and preview audio clips sourced form 7digital.com. After creating the list of files with the song name and artist, a set of scripts queries the discogs database and constructs a more complete dataset with Artist, Title, Album, Genre, Styles, and year of master release.
+Besides, dataset working as not only training but also testing tool for machine learning model plays significant role without doubt. Many datasets that exist for genre classification but only contain the minimum amount of information, namely the audio snippet and a label. Recently, researchers are taking effort to create more complete and accurate dataset in different ways. One of them is using music metadata as supplementary to the existing data in terms of providing music-related information like the name of the song, and album, also the year and price of release.
 
 Discogs is an user-sourced database and marketplace for album releases on vinyl, cassette, CD, and digital formats. Unlike last.fm, the data is extremely complete and accurate because it is heavily moderated. Notably, all releases have a "master format", often chronologically the first release with metadata such as genre, styles (subgenres), and year.
 
+% maybe talk about digital7 here???
 
-In this paper, the problem of automatically computing song's decade is addressed. More specifically, using the combination of traditional music genre classification approach and music metadata are proposed. Although there has been significant works in the development of music information retrieval especially for classification, there has been relatively little work in the development of song's year or decade computation. Although timbral texture feature set is widely used in the research of MIR
+In this paper, the problem of automatically computing song's decade is addressed. More specifically, using the combination of traditional music genre classification approach and music metadata to estimate the year of a song are proposed. Although there has been significant works in the development of music information retrieval especially for genre classification, there has been relatively little work in the development of song's year or decade computation.
 
-The paper is structured as follows. A review of related work is provided in Section 2. Algorithm overview, feature set description and dataset creation are in section 3. Then, section 4 deal with the automatic classification and evaluation of the proposed feature and section 5 with conclusion. Finally, the future work is represented in section 6.
+The paper is structured as follows. A review of related work is provided in Section 2. Algorithm overview, feature set description and dataset creation are in section 3. Then, section 4 deal with the automatic classification and evaluation of the proposed feature and section 5 with conclusion. Finally, the future work is presented in section 6.
 
 %==========================================
 \section{Related Work}
 \label{sec:related}
 
+% How do we talk about the related work?
 \subsection{Style in Music}
+
+
 Style is a vague term that may be understood in different ways depending on the context in which it is employed. Unlike the majority of other artistic disciplines, music is usually considered as not being able to generate creative work directly from the concrete reality \cite{leichtentritt1945aesthetic}. As a result, style is slightly different in music than in literature, painting or sculpture. According to Dannenberg, it is almost impossible to find any obvious objective meaning, or referent associated with a short melody without words \cite{dannenberg2010style}. Essentially, every aspect of melody that communicates with listener is an aspect of style. One would say style is everything in music, or everything in music is style.
 
 In regards to classification with metadata, "Computation Analysis Of Musical Influence" by Nick Collins mentions "...sourcing data from allmusic.com, and utilising python APIs for last.fm, EchoNest, and MusicBrainz." In his approach, Collins also cross referenced the year of the primary release with Discogs.com for accuracy. This paper touches upon the idea of a more semantic understanding of the output of classifiers. 
@@ -132,6 +136,9 @@ The Spectral Flux (hereafter referred to as SF) measures the amount of change of
 \subsection{Dataset Creation}
 \label{subsec:dataset}
 In this research, GTZAN was chosen as the basic database. It is a database of music created by George Tzanetakis specifically for machine learning analysis of genre classification problems. Though, this dataset was argued to have non-negligible issues such as "album effect", and repeated audio samples which would negatively influence the accuracy of the classification \cite{sturm2013gtzan}, it still can be seen as the default choice in the research area of music genre classification. Figure 1 represents the degree of activity of GTZAN.
+
+We used a modified version of the GTZAN dataset augmented by metadata and preview audio clips sourced form 7digital.com. After creating the list of files with the song name and artist, a set of scripts queries the discogs database and constructs a more complete dataset with Artist, Title, Album, Genre, Styles, and year of master release.
+
 
 Our dataset started as 1000 songs from 10 genres but many of the audio clips lacked information, were duplicate songs, or entire albums. In an attempt to maintain accuracy, reduce the album effect, and distribute the years represented, we reduced the dataset to 7 genres with 60 songs in each genre. The majority of these are from GTZAN with some instances added from 7digital.com. We used the 7digital API endpoint interface to search within genres and scrape the 30 second preview clip. Although some of the previews from 7digital represent remastered versions, we cross referenced with the Discogs master release for consistency.  Ideally, the dataset would have an even distribution of songs spanning the range of all years without repeated artists. 
 
