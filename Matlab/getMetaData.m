@@ -44,7 +44,7 @@ for i = 1:num_tracks;
     % Extract features per block
     mfcc = zeros(numBlocks, 13);
     for j = 1: numBlocks
-        mfcc(j,:) = myMFCC(mag_freq_blocked_x(:,j), Fs);
+        mfcc(j,:) = myMFCC(mag_freq_blocked_x(:,j), Fs)';
     end
 
     features(i,1:13) = mean(mfcc,1);

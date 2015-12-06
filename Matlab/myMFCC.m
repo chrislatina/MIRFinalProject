@@ -26,7 +26,6 @@ iNumCoeffs  = 13;
         % calculate the mfccs
         mfcc(:,n)  = T * X_Mel;
     end
-%     mfcc = mfcc';
 end
 
 
