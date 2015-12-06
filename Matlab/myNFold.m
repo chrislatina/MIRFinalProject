@@ -9,7 +9,7 @@ years = cell2mat(years);
 histogram(years);
 %% N-FOLD
 % nFold = 6;
-fold = 1:13;
+% fold = 1:13;
 filesInFolder = 60;
 nSize = size(features,1);
 nSize = nSize / nFold;
@@ -54,17 +54,17 @@ dist_years = reshape([Y1';Y2';Y3';Y4';Y5';Y6';Y7'],1,[])';
 for i = 1:nFold
     
     % RANDOM
-    s = (i-1)*nSize+1;
-    e = i*nSize;
-    test_feat = randData(s:e,:);
-    test_genres(:,i) = rand_genres(s:e);
-    test_years(:,i) = rand_years(s:e);
-    train_feat = randData;
-    train_genres = rand_genres;
-    train_years = rand_years;
-    train_feat(s:e,:) = [];
-    train_genres(s:e,:) = [];
-    train_years(s:e,:) = [];
+%     s = (i-1)*nSize+1;
+%     e = i*nSize;
+%     test_feat = randData(s:e,:);
+%     test_genres(:,i) = rand_genres(s:e);
+%     test_years(:,i) = rand_years(s:e);
+%     train_feat = randData;
+%     train_genres = rand_genres;
+%     train_years = rand_years;
+%     train_feat(s:e,:) = [];
+%     train_genres(s:e,:) = [];
+%     train_years(s:e,:) = [];
 %     
     % DISTRIBUTED: Interleave vectors  
     s = (i-1)*nSize+1;
@@ -88,26 +88,26 @@ for i = 1:nFold
     estimated_genres(:,i) = svm_classify(train_feat, train_genres, test_feat);
      
     %% Run SVM for Year
-    estimated_years(:,i) = svm_regression(train_feat, scaleYear(train_years), test_feat,scaleYear(test_years(:,i)));
-    estimated_years(:,i) = reScaleYear(estimated_years(:,i));
+%     estimated_years(:,i) = svm_regression(train_feat, scaleYear(train_years), test_feat,scaleYear(test_years(:,i)));
+%     estimated_years(:,i) = reScaleYear(estimated_years(:,i));
 
     %% Run K-NN to calculate Genre distance
-    % estimatedClasses(:,i) = myKnn_genre(train_genres, train_feat(:,fold), test_feat(:,fold), 7);
+    [estimated_genres(:,i), estimated_years(:,i)] = myKnn_genre(train_genres, train_feat, test_feat, 7, train_years);
     
     %% For each track, calculate year: run K-NN for the specific genre selected.
-    for j=1:length(estimated_genres)
-
-       %Get all tracks in training data of current genre
-       predicted_genre = estimated_genres{i};
-       indexC = strfind(train_genres, predicted_genre);
-       indices = find(not(cellfun('isempty', indexC)));
-       
-%        indices = 1:length(estimated_genres);
-
-       % Set K
-       K = 9;
-       estimated_years(:,j) = myKnn(years(indices), train_feat(indices,:), test_feat(j,:), K); 
-    end
+%     for j=1:length(estimated_genres)
+% 
+%        %Get all tracks in training data of current genre
+%        predicted_genre = estimated_genres{i};
+%        indexC = strfind(train_genres, predicted_genre);
+%        indices = find(not(cellfun('isempty', indexC)));
+%        
+% %       indices = 1:length(estimated_genres);
+% 
+%        % Set K
+%        K = 9;
+%        estimated_years(:,j) = myKnn(train_years(indices), train_feat(indices,:), test_feat(j,:), K); 
+%     end
     
     %% Genre Rate
     diff_genres((i-1)*nSize+1:i*nSize,1) = strcmp(estimated_genres(:,i), test_genres(:,i));

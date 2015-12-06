@@ -22,7 +22,7 @@ num_labels = size(all_labels,1);
 years = yearsLabel(I(:,1:K));
 k_dist = B(:,1:K);
 f_dist = (1- (k_dist ./ repmat(sum(k_dist,2),1,K))) ./ (K-1);
-estimated_years = mean(f_dist .* years,2) * K;
+estimated_years = mean(f_dist' .* years) * K;
 
 % estimatedClass = mean([years{1} years{2}]);
 
