@@ -164,12 +164,23 @@ N-fold was applied in the research in order to perform multiple iteration of cla
 \subsubsection{Segmentation of Data}
 The data was segmented into training and testing pools using two techniques. The results were quite different and tie into some fundamental concepts of dataset creation. One approach was an interleaved distribution. The second was a randomized distribution. 
 
-For the interleaved distribution, the feature set was read in order adding one song from each genre at a time. Feature set was read from a tab-delimted file containing the song's metadata including artist name, album, title, genre, year and filename ordered by genre, artist, and then album alphabetically . Because there were instances of multiple songs by an artist from the same album, the distributed segmentation approach separates songs from one album occurring in both the training and test set, thus removing the risk of the ``artist effect", ``album effect". In his paper, Seyerlehner argues that it is relatively easy to identify songs by one and the same artist using audio similarity algorithm \cite{seyerlehner2010fusing}. This effect is kown as artist effect. In some cases, even album-specific production dffects are reflected in the spectral representation of songs, which is respectively called ``album effect". Obviously, songs by the same artist will tend to belong to the same genre, and the ability to recognize the genre by specific production effect is not what this research intend to measure. However, this also the worst case scenario, because the training and test set will always be very different from each other. 
+For the interleaved distribution, the feature set was read in order adding one song from each genre at a time. Feature set was read from a tab-delimted file containing the song's metadata including artist name, album, title, genre, year and filename ordered by genre, artist, and then album alphabetically . Because there were instances of multiple songs by an artist from the same album, the distributed segmentation approach separates songs from one album occurring in both the training and test set, thus removing the risk of the ``artist effect", ``album effect". In his paper, Seyerlehner argues that it is relatively easy to identify songs by one and the same artist using audio similarity algorithm \cite{seyerlehner2010fusing}. This effect is known as artist effect. In some cases, even album-specific production effects are reflected in the spectral representation of songs, which is respectively called "album effect". Obviously, songs by the same artist will tend to belong to the same genre, and the ability to recognize the genre by specific production effect is not what this research intend to measure. However, this also the worst case scenario, because the training and test set will always be very different from each other. 
 
 For the randomized distribution, a seed is generated for the entire feature set and applied to all songs and metadata, completely randomizing the order. This creates a potentially even distribution of genres within each fold for the training and test sets. It greatly increases the chance of the album effect, however, because songs from the same album that were previously only in the training set now can appear in the test set as well.
 
+\subsubsection{Feature Selection} 
+
+After attempting to select features with forward selection, we  manually selected features, mimicking a backward selection approach. Trying logical combinations of feature groups proved to be more successful. In general, MFCCs and subsets of MFCCs outperformed other feature combinations. Our main groups were the mean and standard deviations of MFCCs, Spectral Centroid, and Spectral flux as mentioned in section 3. We also tested mean and standard deviation of Pitch Chroma, however this never resulted in improvement. 
+
 \subsection{Metrics}
-\label{subsec:metrics}
+We tested four variations on the KNN and SVM algorithms for each of the two segmentation approaches. For the random distribution, each attempt was the mean of the same 6-fold process described in section 4.1.1. The seed and therefore the result changed with each run, so the result given is the best of 10 runs to show the lower boundary. 
+
+\subsubsection{SVM using Regression} 
+
+The SVM Regression was performed on the year data only, as genres can only be classified discretely. We scaled the years from the range of 1927-2015 to a range of 0-1. Using libsvm with regression settings of a nu-SVR with a polynomial kernel, a nu value of 0.5, and a default cost parameter of 1. Combining the mean and standard deviation of MFCCs gave the most successful results. Our average mean error in calculating the year was 12.821 years for the interleaved distribution and 10.425 years for the random distribution.  
+
+\subsubsection{SVM } 
+
 %============================================
 \section{conclusion}
 \label{sec:conclusion}
