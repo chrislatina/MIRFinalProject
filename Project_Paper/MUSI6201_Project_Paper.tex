@@ -40,7 +40,7 @@
   {Chris Latina}
 	{Georgia Tech Center for Music Technology\\
 	840 McMillan St. Atlanta, GA\\
-	chrisrlatina@gmail.com}
+	chris.latina@gatech.edu}
   {Liang Tang}
 	{Georgia Tech Center for Music Technology\\
 	840 McMillan St. Atlanta, GA\\
@@ -57,7 +57,7 @@
 
 %Are there new insights through computational methods to the problem of getting song's year? This project is motivated by combining traditional music information retrieval (hereafter referred to as MIR) approach and metadata of song to compute a song's decade.  Our task is to determine whether a heirarchical approach to classification using genre can help predict other metadata about a set of audio clips, such as the year of release. While genre classification is a common MIR problem, we set out to investigate whether one can use audio features in conjunction with metadata cross referenced with Discogs to estimate a song's decade.
 
-Is it possible to compute a song's decade using only an audio clip? Computing a song's decade makes use of instantaneous audio features, metadata, and traditional machine learning algorithms. Inspired by the accuracy and consistency of the Discogs database, we wanted to apply the approaches commonly used to classify genre to additional song and album metadata. Our task is to determine which features are most relevant for the task and more generically, whether a hierarchical approach to classification using genre can help predict other metadata about a set of audio clips, such as the year of release.
+Is it possible to compute a song's decade using only an audio clip? This paper describes an algorithm that makes use of instantaneous audio features, metadata, and traditional machine learning algorithms. Inspired by the accuracy and consistency of the Discogs database, we wanted to apply the approaches commonly used to classify genre to additional song and album metadata. Our task is to determine which features are most relevant for the task and more generically, whether a hierarchical approach to classification using genre can help predict other metadata about a set of audio clips, such as the year of release.
 
 \end{abstract}
 %
@@ -69,8 +69,6 @@ Year computation, MIR, GTZAN
 \label{sec:intro}
 
 MIR is an active field of machine learning research. Users of online music services are very likely to search for music by genre or style, so researchers have attempted to understand how to automatically classify music by these labels. For instance, overarching genres like rock or disco likely exhibit enough distinction for computers to effectively distinguish between them \cite{diab1musical}.
-
-In that effort, several papers have explored the efficacy of learning algorithms to predict genres. In his paper, George Tzanetakis effectively classified genres on live radio broadcasts using a Gaussian classifier \cite{tzanetakis2002musical}. Mandel used Support Vector Machine (hereafter referred to as \textit{SVM}) on artist and album-level features to make similar classification as well \cite{mandel2005song}. Also, another study explored mixtures of Gaussians and K-Nearest-Neighbors (hereafter referred to as \textit{KNN}) for music classification \cite{li2003comparative}. Each of these studies used similar features - Mel-Frequency Cepstral Coefficients (hereafter referred to as \textit{MFCC}) and chroma features of audio to make the classification.
 
 Besides, dataset working as not only training but also testing tool for machine learning model plays significant role without doubt. Many datasets that exist for genre classification but only contain the minimum amount of information, namely the audio snippet and a label. Recently, researchers are taking effort to create more complete and accurate dataset in different ways. One of them is using music metadata as supplementary to the existing data in terms of providing music-related information like the name of the song, and album, also the year and price of release.
 
@@ -86,14 +84,12 @@ The paper is structured as follows. A review of related work is provided in Sect
 \section{Related Work}
 \label{sec:related}
 
-% How do we talk about the related work?
-\subsection{Style in Music}
-
 
 Style is a vague term that may be understood in different ways depending on the context in which it is employed. Unlike the majority of other artistic disciplines, music is usually considered as not being able to generate creative work directly from the concrete reality \cite{leichtentritt1945aesthetic}. As a result, style is slightly different in music than in literature, painting or sculpture. According to Dannenberg, it is almost impossible to find any obvious objective meaning, or referent associated with a short melody without words \cite{dannenberg2010style}. Essentially, every aspect of melody that communicates with listener is an aspect of style. One would say style is everything in music, or everything in music is style.
 
-In regards to classification with metadata, "Computation Analysis Of Musical Influence" by Nick Collins mentions "...sourcing data from allmusic.com, and utilising python APIs for last.fm, EchoNest, and MusicBrainz." In his approach, Collins also cross referenced the year of the primary release with Discogs.com for accuracy. This paper touches upon the idea of a more semantic understanding of the output of classifiers. 
+In music, like in other forms of art, style represents a classification of the medium. Likewise, a style is often associated with an era. Art historians often map the trajectory of the two in order to decipher to influence of one school of artists on another. In regards to classification with metadata, "Computation Analysis Of Musical Influence" by Nick Collins mentions "...sourcing data from allmusic.com, and utilising python APIs for last.fm, EchoNest, and MusicBrainz." In his approach, Collins also cross referenced the year of the primary release with Discogs.com for accuracy. This paper touches upon the idea of a more semantic understanding of the output of classifiers. 
 
+In that effort, several papers have explored the efficacy of learning algorithms to predict genres. In his paper, George Tzanetakis effectively classified genres on live radio broadcasts using a Gaussian classifier \cite{tzanetakis2002musical}. Mandel used Support Vector Machine (hereafter referred to as \textit{SVM}) on artist and album-level features to make similar classification as well \cite{mandel2005song}. Also, another study explored mixtures of Gaussians and K-Nearest-Neighbors (hereafter referred to as \textit{KNN}) for music classification \cite{li2003comparative}. Each of these studies used similar features - Mel-Frequency Cepstral Coefficients (hereafter referred to as \textit{MFCC}) and chroma features of audio to make the classification.
 
 
 %==========================================
@@ -102,25 +98,25 @@ In regards to classification with metadata, "Computation Analysis Of Musical Inf
 
 \subsection{Audio Feature Extraction}
 \label{subsec:feature}
-Feature extraction is the process of computing a compact numerical representation that can be used to characterize a segment of audio \cite{tzanetakis2002musical}. In terms of MIR, the design of descriptive features for specific application is the main challenge in building pattern recognition system.
+Feature extraction is the process of computing a compact numerical representation that can be used to characterize a segment of audio \cite{tzanetakis2002musical}. In terms of MIR, the design of descriptive features for specific application is the main challenge in building pattern recognition systems.
 
-\subsubsection{Timbral Texture Features}
+\subsubsection{Timbral Features: Mel-Frequency Cepstral Coefficients}
 \label{subsubsec:timbral}
 
-
-MFCC are perceptually motivated features that are based on the STFT.
+MFCCs are perceptually motivated features that are based on the STFT.
 
 \begin{equation*}
 {\mathrm{MFCC}}(n)	= \sum\limits_{k' = 1}^{\mathcal{K}'}{\log\big( |X'(k',n)|\big)\cdot \cos\left( j\cdot\left(k'-\frac{1}{2} \right)\frac{\pi}{\mathcal{K}'} \right)}			
 \end{equation*}
 
-The Spectral Centroid (hereafter referred to as \textit{SC}) is defined as the center of gravity of the magnitude spectrum of the STFT.
+\subsubsection{Spectral Features}
+\label{subsubsec:spectral}
+The Spectral Centroid (hereafter referred to as \textit{SC}) is defined as the center of gravity of the magnitude spectrum of the STFT. The centroid is a measure of spectral shape and higher centroid values correspond to "brighter" textures with more high frequencies.
 
 \begin{equation*}\label{eq:centroid}
 \mathrm{SC}(n) = \frac{\sum\limits_{k = 0}^{\mathcal{K}/2-1}{k\cdot |X(k,n)|^2}}{\sum\limits_{k = 0}^{N/2-1}{|X(k,n)|^2}}
 			\end{equation*}
 			
-The centroid is a measure of spectral shape and higher centroid values correspond to "brighter" textures with more high frequencies.
 
 %\subsubsection{Instantaneous Feature}
 %\label{subsubsec:instantaneous}
@@ -135,14 +131,9 @@ The Spectral Flux (hereafter referred to as \textit{SF}) measures the amount of 
 
 \subsection{Dataset Creation}
 \label{subsec:dataset}
-In this research, GTZAN was chosen as the basic database. It is a database of music created by George Tzanetakis specifically for machine learning analysis of genre classification problems. Though, this dataset was argued to have non-negligible issues such as "album effect", and repeated audio samples which would negatively influence the accuracy of the classification \cite{sturm2013gtzan}, it still can be seen as the default choice in the research area of music genre classification. Figure 1 represents the degree of activity of GTZAN.
+In this research, we selected GTZAN as our starting dataset. George Tzanetakis created GTZAN specifically for machine learning analysis of genre classification problems. Although this dataset has been documented to have non-negligible issues such as "album effect" with repeated audio samples which would negatively influence the accuracy of the classification \cite{sturm2013gtzan}, it still can be seen as the default choice in the research area of music genre classification. Figure 1 represents the degree of activity of GTZAN.
 
-We used a modified version of the GTZAN dataset augmented by metadata and preview audio clips sourced form 7digital.com. After creating the list of files with the song name and artist, a set of scripts queries the discogs database and constructs a more complete dataset with Artist, Title, Album, Genre, Styles, and year of master release.
-
-
-Our dataset started as 1000 songs from 10 genres but many of the audio clips lacked information, were duplicate songs, or entire albums. In an attempt to maintain accuracy, reduce the album effect, and distribute the years represented, we reduced the dataset to 7 genres with 60 songs in each genre. The majority of these are from GTZAN with some instances added from 7digital.com. We used the 7digital API endpoint interface to search within genres and scrape the 30 second preview clip. Although some of the previews from 7digital represent remastered versions, we cross referenced with the Discogs master release for consistency.  Ideally, the dataset would have an even distribution of songs spanning the range of all years without repeated artists. 
-
-The final dataset consists of 420 audio clips in total with genres Blues, Country, Disco, Hip Hop, Metal, Pop, Rock. Any additional track samples added from 7digital were cut to 30 seconds in length using ffmpeg. Metadata was then scraped from Discogs.com API using python.
+We used a modified version of the GTZAN dataset augmented by metadata and preview audio clips sourced form 7digital.com. After creating the list of files with the song name and artist, downloading and trimming the files, we used a set of scripts queries the discogs database and constructs a more complete dataset with Artist, Title, Album, Genre, Styles, and year of master release. Our dataset started as 1000 songs from 10 genres but many of the audio clips lacked information, genres groups contained duplicate songs, or entire albums. In an attempt to maintain accuracy, reduce the album effect, and distribute the years represented, we reduced the dataset to 7 genres with 60 songs in each genre. The majority of these are from GTZAN with some instances added from 7digital.com. We used the 7digital API endpoint interface to search within genres and scrape the preview clip. Although some of the previews from 7digital represent remastered versions, we cross referenced with the Discogs master release for consistency.  Ideally, the dataset would have an even distribution of songs spanning the range of all years without repeated artists. The final dataset consists of 420 audio clips in total with genres Blues, Country, Disco, Hip Hop, Metal, Pop, Rock. Any additional track samples added from 7digital were cut to 30 seconds in length using ffmpeg. Metadata was then scraped from Discogs.com API using python.
 
 
 \begin{figure}[htb]
@@ -151,33 +142,24 @@ The final dataset consists of 420 audio clips in total with genres Blues, Countr
   \centering
   \centerline{\includegraphics[width=8.5cm]{figures/GTZAN1.png}}
   \vspace{0.5cm}
-  \caption{ Annual numbers of published works in MGR with experimental components, divided into ones that use and do not use GTZAN \cite{sturm2013gtzan}}
+  \caption{ Annual numbers of published works in MIR with experimental components, divided into ones that use and do not use GTZAN \cite{sturm2013gtzan}}
 \label{fig:figure1}
 \end{minipage}
 \end{figure}
 
 
-\subsection{Query Metadata}
-\label{subsec:metadata}
-Discog.....
-
-
-
 \subsection{Classification}
 \label{subsec:classification}
-For classification, two approaches which are based off of SVM and KNN were used. The idea of applying two different approaches to achieve year computation is not only trying to maximize the accuracy of year computation, but comparing the suitability of this two basic statistical pattern recognition (hereafter referred to as \textit{SPR}) classifiers. Essentially, SPR is applied to estimate the probability density function (hereafter referred to as \textit{PDF}) for the feature vectors of each class. 
+For classification, variations of SVM and KNN were used. The idea of applying two different approaches to achieve year computation attempts to maximize the accuracy of year computation, but comparing the suitability of this two basic statistical pattern recognition (hereafter referred to as \textit{SPR}) classifiers. Essentially, SPR is applied to estimate the probability density function (hereafter referred to as \textit{PDF}) for the feature vectors of each class. 
 %===========================================
 \section{Evaluation}
 \label{sec:evaluation}
-
-
-
 
 \subsection{Methodology}
 \label{subsec:methodology}
 
 \subsubsection{N-fold Validation}
-N-fold was applied in the research in order to perform multiple iteration of classification for evaluation. Given to the fact that the dataset contains 8 genres with 60 songs each (420 songs in total), N was set to 7. This way, for each fold, the training set contains 350 songs and the test set contains 70 songs, with 10 from each genre.
+N-fold was applied in the research in order to perform multiple iteration of classification for evaluation. The dataset contains 7 genres with 60 songs each (420 songs in total). We set the number of folds to 6 to evenly distribute the genres represented in the training and test sets. This way, for each fold, the training set contains 350 songs and the test set contains 70 songs, with 10 songs from each genre.
 
 \subsubsection{Segmentation of Data}
 The data was segmented into training and testing pools using two techniques. The results were quite different and tie into some fundamental concepts of dataset creation. One approach was an interleaved distribution. The second was a randomized distribution. 

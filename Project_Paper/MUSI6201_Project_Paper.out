@@ -1,22 +1,21 @@
 \BOOKMARK [1][-]{section.1}{ Introduction}{}% 1
 \BOOKMARK [1][-]{section.2}{ Related Work}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{ Style in Music}{section.2}% 3
-\BOOKMARK [1][-]{section.3}{ Algorithm Overview \046 description}{}% 4
-\BOOKMARK [2][-]{subsection.3.1}{ Audio Feature Extraction}{section.3}% 5
-\BOOKMARK [3][-]{subsubsection.3.1.1}{ Timbral Texture Features}{subsection.3.1}% 6
+\BOOKMARK [1][-]{section.3}{ Algorithm Overview \046 description}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{ Audio Feature Extraction}{section.3}% 4
+\BOOKMARK [3][-]{subsubsection.3.1.1}{ Timbral Features: Mel-Frequency Cepstral Coefficients}{subsection.3.1}% 5
+\BOOKMARK [3][-]{subsubsection.3.1.2}{ Spectral Features}{subsection.3.1}% 6
 \BOOKMARK [2][-]{subsection.3.2}{ Dataset Creation}{section.3}% 7
-\BOOKMARK [2][-]{subsection.3.3}{ Query Metadata}{section.3}% 8
-\BOOKMARK [2][-]{subsection.3.4}{ Classification}{section.3}% 9
-\BOOKMARK [1][-]{section.4}{ Evaluation}{}% 10
-\BOOKMARK [2][-]{subsection.4.1}{ Methodology}{section.4}% 11
-\BOOKMARK [3][-]{subsubsection.4.1.1}{ N-fold Validation}{subsection.4.1}% 12
-\BOOKMARK [3][-]{subsubsection.4.1.2}{ Segmentation of Data}{subsection.4.1}% 13
-\BOOKMARK [2][-]{subsection.4.2}{ Metrics}{section.4}% 14
-\BOOKMARK [1][-]{section.5}{ conclusion}{}% 15
-\BOOKMARK [2][-]{subsection.5.1}{ }{section.5}% 16
-\BOOKMARK [2][-]{subsection.5.2}{ }{section.5}% 17
-\BOOKMARK [1][-]{section.6}{ Future Work}{}% 18
-\BOOKMARK [2][-]{subsection.6.1}{ Feature Extraction}{section.6}% 19
-\BOOKMARK [2][-]{subsection.6.2}{ Classification}{section.6}% 20
-\BOOKMARK [2][-]{subsection.6.3}{ Data set enhancement}{section.6}% 21
-\BOOKMARK [1][-]{section.7}{ References}{}% 22
+\BOOKMARK [2][-]{subsection.3.3}{ Classification}{section.3}% 8
+\BOOKMARK [1][-]{section.4}{ Evaluation}{}% 9
+\BOOKMARK [2][-]{subsection.4.1}{ Methodology}{section.4}% 10
+\BOOKMARK [3][-]{subsubsection.4.1.1}{ N-fold Validation}{subsection.4.1}% 11
+\BOOKMARK [3][-]{subsubsection.4.1.2}{ Segmentation of Data}{subsection.4.1}% 12
+\BOOKMARK [2][-]{subsection.4.2}{ Metrics}{section.4}% 13
+\BOOKMARK [1][-]{section.5}{ conclusion}{}% 14
+\BOOKMARK [2][-]{subsection.5.1}{ }{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.2}{ }{section.5}% 16
+\BOOKMARK [1][-]{section.6}{ Future Work}{}% 17
+\BOOKMARK [2][-]{subsection.6.1}{ Feature Extraction}{section.6}% 18
+\BOOKMARK [2][-]{subsection.6.2}{ Classification}{section.6}% 19
+\BOOKMARK [2][-]{subsection.6.3}{ Data set enhancement}{section.6}% 20
+\BOOKMARK [1][-]{section.7}{ References}{}% 21
