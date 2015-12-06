@@ -1,3 +1,12 @@
+% =========================================================================
+% @param trainLabel: label of training sample
+% @param traingData: training audio sample
+% @param testData: testing audio sample
+% @param K       : Kth nearest neighbor of the cluster center
+% =========================================================================
+% @retval estimatedClass: estimated label of testing audio sample
+% =========================================================================
+
 function [estimatedClass] = myKnn(trainLabel, trainData, testData, K)
 % k-Nearest Neighbor (Knn)
 

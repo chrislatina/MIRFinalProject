@@ -1,4 +1,18 @@
-function [ spectral_features, genres, years] = getSpectralFeatures(dataPath, filePath, windowSize, hopSize)
+% =========================================================================
+% This function extract the spectral features from the audio sample, then
+% organize them into feature matrix
+% =========================================================================
+% @param dataPath: the directory of meatadata
+% @param filePath: the directory of audio samples
+% @param windowSize
+% @param hopSize
+% =========================================================================
+% @retval spectral_features: feature matrix in the size of N by 28
+% including spectral centroid, spectral flux, and pitch chroma
+% @retval genres: genre label of the song
+% @retval years: year label of the song
+
+function [spectral_features, genres, years] = getSpectralFeatures(dataPath, filePath, windowSize, hopSize)
 
 data = readtable(dataPath,'Delimiter','tab','ReadVariableNames',false);
 num_tracks = size(data,1);

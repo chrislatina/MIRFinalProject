@@ -1,3 +1,20 @@
+% =========================================================================
+% To see the performance of classifier, using N-fold to have a cross
+% validation
+% =========================================================================
+% @param years:
+% @param genres:
+% @param features:
+% @param nFold: the number of 
+% @param fold
+% @param K: number of first kth neighbor
+% =========================================================================
+% @retval diff_genres: the absolute difference between the estimated genre 
+% and groundtruth 
+% @retval diff_years: the absolute difference between the estimated year
+% and groundtruth
+% =========================================================================
+
 function [ diff_genres, diff_years] = myNFold( years, genres, features, nFold, fold, K)
 
 features = features(:,fold);
@@ -85,7 +102,7 @@ for i = 1:nFold
 
     
     %% Run the SVM for Genre
-    estimated_genres(:,i) = svm_classify(train_feat, train_genres, test_feat);
+%     estimated_genres(:,i) = svm_classify(train_feat, train_genres, test_feat);
      
     %% Run SVM for Year
 %     estimated_years(:,i) = svm_regression(train_feat, scaleYear(train_years), test_feat,scaleYear(test_years(:,i)));

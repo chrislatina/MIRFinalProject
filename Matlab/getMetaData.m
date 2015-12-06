@@ -12,6 +12,7 @@
 % @retval genres is a vector with the size of total number of audio samples
 % by 1.
 % @retval feature vector in the size of number of audio samples by 1
+% =========================================================================
 
 function [ features, genres, years] = getMetaData(dataPath, filePath, windowSize, hopSize)
 
