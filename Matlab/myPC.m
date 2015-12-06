@@ -1,3 +1,11 @@
+% =========================================================================
+% Picth Chroma Computation
+% =========================================================================
+% @param X: Magnitude spectrum of audio sample
+% @param fs: sample rate
+% =========================================================================
+% @retval vpc: pitch chroma matrix in the size of 12 by N
+
 function [vpc] = myPC(X, fs)
 
 % initialization

@@ -4,6 +4,7 @@
 % =========================================================================
 % @param X: Magnitude spectrum of audio signal
 % @param fs: sampling frequency
+% =========================================================================
 % @retval mfcc: the matrix of MFCC in the size of number of audio samples *
 % 13
 % =========================================================================

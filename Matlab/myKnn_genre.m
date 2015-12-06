@@ -1,4 +1,9 @@
+<<<<<<< Updated upstream
 function [estimatedClass] = myKnn_genre(trainLabel, trainData, testData, K)
+=======
+
+function [estimatedClass] = myKnn2(trainLabel, trainData, testData, K)
+>>>>>>> Stashed changes
 % k-Nearest Neighbor (Knn)
 
 num_train = size(trainData,1);
