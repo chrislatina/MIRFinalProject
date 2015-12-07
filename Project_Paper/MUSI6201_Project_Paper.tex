@@ -202,21 +202,22 @@ Forward selection did not prove successful when using MFCCs and Spectral data. T
 
 In each genre, many of the songs are from only a few albums. Training and testing for the genre or style classification with GTZAN is more likely doing the album classification. This ?album? effect heavily influences the genre classification albeit positively, however this is actually incorrect. The effort of improving GTZAN with discogsand 7digital did slightly improve the accuracy of the year computation. Essentially, by importing new songs and abandoning several songs that belong to the same album, the augmented dataset is more even distributed by year. This is not only beneficial for decreasing the ?album effect?, but also increasing the possibility of computing the year correctly.
 
-Since the GTZAN dataset was incomplete with the basic artist and song title tags and contained duplicate songs, our resulting dataset was small. Ideally, the size of the dataset should be twice that of what we used. A small dataset can lead to automatic selection and neglect potentially useful features. To train a qualified year computation system, a large dataset with evenly distributed audio samples spanning many years and genres is necessary.
-
 %============================================
 \section{Future Work}
 \label{sec: future}
+
+\subsection{Dataset Modification}
+Since the GTZAN dataset was incomplete with the basic artist and song title tags and contained duplicate songs, our resulting dataset was small. Ideally, the size of the dataset should be twice that of what we used. A small dataset can lead to automatic selection and neglect potentially useful features. To train a qualified year computation system, a large dataset with evenly distributed audio samples spanning many years and genres is necessary. This does take quite a long time, however the scripts provided to scrape metadata from Discogs in conjunction with the 7digital audio preview scraping may be a good solution to this problem.
 
 \subsection{Feature Extraction}
 In this research, timbral texture features and spectral features are extracted from the audio sample and used for training the system. However, rhythmic features like beat histogram are not exploited. With the rhythmic feature, the performance of system would be enhanced.
 
 
 \subsection{Classification}
-SVM and KNN as statistical pattern recognition models are widely used in the research of MIR. Recently, deep learning especially convolutional neural network (hereafter referred as to CNN) becomes more and more popular in this research area. Convolutional neural network, with its characteristics of  multi-layer structure, sparse connectivity, and weights sharing has already improved the performance of music genre classifier and chord detector. Combining CNN with audio features may help improve the accuracy of song?s decade computation.
+SVM and KNN as statistical pattern recognition models are widely used in the research of MIR. Recently, deep learning methods, especially convolutional neural network (also known as the CNN) has become more and more popular in this research area. Convolutional neural networks, characterized by a multi-layer structure, sparse connectivity, and weight sharing has already improved the performance of music genre classifiers and chord detectors. Combining CNN with audio features may help improve the accuracy of song's decade computation.
 
 \subsection{Dataset Enhancement}
-In our research, the ?album effect? and the size of the dataset are two non-negligible issues. In order to remove the album effect, the self-contained metadata of songs should be well-organized with the audio sample. The database and its API such as discog and digital7 should be fully employed of building and enhancing the dataset. 
+In our research, the ``album effect" and the size of the dataset are two non-negligible issues. In order to remove the album effect, the self-contained metadata of songs should be well-organized with the audio sample. The database and its API such as discog and digital7 should be fully employed of building and enhancing the dataset. 
 
 %============================================
 %\section{Formatting your paper}
