@@ -57,7 +57,7 @@
 
 %Are there new insights through computational methods to the problem of getting song's year? This project is motivated by combining traditional music information retrieval (hereafter referred to as MIR) approach and metadata of song to compute a song's decade.  Our task is to determine whether a heirarchical approach to classification using genre can help predict other metadata about a set of audio clips, such as the year of release. While genre classification is a common MIR problem, we set out to investigate whether one can use audio features in conjunction with metadata cross referenced with Discogs to estimate a song's decade.
 
-Is it possible to compute a song's decade using only an audio clip? This paper describes an algorithm that makes use of instantaneous audio features, metadata, and traditional machine learning algorithms. Inspired by the accuracy and consistency of the Discogs database, we wanted to apply the approaches commonly used to classify genre to additional song and album metadata. Our task is to determine which features are most relevant for the task and more generically, whether a hierarchical approach to classification using genre can help predict other metadata about a set of audio clips, such as the year of release.
+Is it possible to compute a song's decade using only an audio clip? This paper describes an algorithm that makes use of instantaneous audio features, metadata, and traditional machine learning algorithms to estimate a song's decade. Inspired by the accuracy and consistency of the Discogs database, we wanted to apply the approaches commonly used to classify genre to additional song and album metadata. Our task is to determine which features are most relevant for the task and more generically, whether a hierarchical approach to classification using genre can help predict other metadata about a set of audio clips, such as the year of release.
 
 \end{abstract}
 %
@@ -133,9 +133,6 @@ The Spectral Flux (hereafter referred to as \textit{SF}) measures the amount of 
 \label{subsec:dataset}
 In this research, we selected GTZAN as our starting dataset. George Tzanetakis created GTZAN specifically for machine learning analysis of genre classification problems. Although this dataset has been documented to have non-negligible issues such as "album effect" with repeated audio samples which would negatively influence the accuracy of the classification \cite{sturm2013gtzan}, it still can be seen as the default choice in the research area of music genre classification. Figure 1 represents the degree of activity of GTZAN.
 
-We used a modified version of the GTZAN dataset augmented by metadata and preview audio clips sourced form 7digital.com. After creating the list of files with the song name and artist, downloading and trimming the files, we used a set of scripts queries the discogs database and constructs a more complete dataset with Artist, Title, Album, Genre, Styles, and year of master release. Our dataset started as 1000 songs from 10 genres but many of the audio clips lacked information, genres groups contained duplicate songs, or entire albums. In an attempt to maintain accuracy, reduce the album effect, and distribute the years represented, we reduced the dataset to 7 genres with 60 songs in each genre. The majority of these are from GTZAN with some instances added from 7digital.com. We used the 7digital API endpoint interface to search within genres and scrape the preview clip. Although some of the previews from 7digital represent remastered versions, we cross referenced with the Discogs master release for consistency.  Ideally, the dataset would have an even distribution of songs spanning the range of all years without repeated artists. The final dataset consists of 420 audio clips in total with genres Blues, Country, Disco, Hip Hop, Metal, Pop, Rock. Any additional track samples added from 7digital were cut to 30 seconds in length using ffmpeg. Metadata was then scraped from Discogs.com API using python.
-
-
 \begin{figure}[htb]
 
 \begin{minipage}[b]{1.0\linewidth}
@@ -146,6 +143,11 @@ We used a modified version of the GTZAN dataset augmented by metadata and previe
 \label{fig:figure1}
 \end{minipage}
 \end{figure}
+
+We used a modified version of the GTZAN dataset augmented by metadata and preview audio clips sourced form 7digital.com. After creating the list of files with the song name and artist, downloading and trimming the files, we used a set of scripts queries the discogs database and constructs a more complete dataset with Artist, Title, Album, Genre, Styles, and year of master release. Our dataset started as 1000 songs from 10 genres but many of the audio clips lacked information, genres groups contained duplicate songs, or entire albums. In an attempt to maintain accuracy, reduce the album effect, and distribute the years represented, we reduced the dataset to 7 genres with 60 songs in each genre. The majority of these are from GTZAN with some instances added from 7digital.com. We used the 7digital API endpoint interface to search within genres and scrape the preview clip. Although some of the previews from 7digital represent remastered versions, we cross referenced with the Discogs master release for consistency.  Ideally, the dataset would have an even distribution of songs spanning the range of all years without repeated artists. The final dataset consists of 420 audio clips in total with genres Blues, Country, Disco, Hip Hop, Metal, Pop, Rock. Any additional track samples added from 7digital were cut to 30 seconds in length using ffmpeg. Metadata was then scraped from Discogs.com API using python.
+
+
+
 
 
 \subsection{Classification}

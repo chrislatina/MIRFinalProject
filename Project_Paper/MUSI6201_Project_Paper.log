@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  6 DEC 2015 18:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  6 DEC 2015 19:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -335,27 +335,21 @@ Overfull \hbox (5.1486pt too wide) detected at line 110
 <figures/GTZAN1.png, id=128, 503.8825pt x 198.7425pt>
 File: figures/GTZAN1.png Graphic file (type png)
  <use figures/GTZAN1.png>
-Package pdftex.def Info: figures/GTZAN1.png used on input line 143.
+Package pdftex.def Info: figures/GTZAN1.png used on input line 140.
 (pdftex.def)             Requested size: 241.84842pt x 95.38924pt.
 
 [2 <./figures/GTZAN1.png>] [3] (./MUSI6201_Project_Paper.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 416.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 418.
  [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 416.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 418.
 
 (./MUSI6201_Project_Paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 416.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 416.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 418.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 418.
+Package rerunfilecheck Info: File `MUSI6201_Project_Paper.out' has not changed.
 
-
-Package rerunfilecheck Warning: File `MUSI6201_Project_Paper.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `MUSI6201_Project_Paper.out':
-(rerunfilecheck)             Before: 64156CBB3E7B31685C99E8242766382B;1767
-(rerunfilecheck)             After:  54908FA01ADE1BAB167CE9B1239D107F;1767.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 416.
+(rerunfilecheck)             Checksum: 54908FA01ADE1BAB167CE9B1239D107F;1767.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 418.
  ) 
 Here is how much of TeX's memory you used:
  5897 strings out of 493089
@@ -379,7 +373,7 @@ f-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fon
 ts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/
 urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/
 utmri8a.pfb>
-Output written on MUSI6201_Project_Paper.pdf (4 pages, 164440 bytes).
+Output written on MUSI6201_Project_Paper.pdf (4 pages, 164432 bytes).
 PDF statistics:
  216 PDF objects out of 1000 (max. 8388607)
  192 compressed objects within 2 object streams
