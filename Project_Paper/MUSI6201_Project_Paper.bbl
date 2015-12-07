@@ -1,4 +1,4 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{1}
 
 \bibitem{diab1musical}
 Omar Diab, Anthony Manero, and Reid Watson,
@@ -11,17 +11,6 @@ Thierry Bertin-Mahieux, Daniel~PW Ellis, Brian Whitman, and Paul Lamere,
 \newblock in {\em ISMIR 2011: Proceedings of the 12th International Society for
   Music Information Retrieval Conference, October 24-28, 2011, Miami, Florida}.
   University of Miami, 2011, pp. 591--596.
-
-\bibitem{leichtentritt1945aesthetic}
-Hugo Leichtentritt,
-\newblock ``Aesthetic ideas as the basis of musical styles,''
-\newblock {\em The Journal of Aesthetics and Art Criticism}, vol. 4, no. 2, pp.
-  65--73, 1945.
-
-\bibitem{dannenberg2010style}
-Roger~B Dannenberg,
-\newblock ``Style in music,''
-\newblock in {\em The structure of style}, pp. 45--57. Springer, 2010.
 
 \bibitem{tzanetakis2002musical}
 George Tzanetakis and Perry Cook,
@@ -62,5 +51,12 @@ Chih-Chung Chang and Chih-Jen Lin,
 \newblock ``Libsvm: A library for support vector machines,''
 \newblock {\em ACM Transactions on Intelligent Systems and Technology (TIST)},
   vol. 2, no. 3, pp. 27, 2011.
+
+\bibitem{vedaldi2010vlfeat}
+Andrea Vedaldi and Brian Fulkerson,
+\newblock ``Vlfeat: An open and portable library of computer vision
+  algorithms,''
+\newblock in {\em Proceedings of the international conference on Multimedia}.
+  ACM, 2010, pp. 1469--1472.
 
 \end{thebibliography}

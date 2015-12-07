@@ -37,7 +37,7 @@
 % Two addresses (uncomment and modify for two-address case).
 % ----------------------------------------------------------
 \twoauthors
-  {Chris Latina}
+  {Christopher Latina}
 	{Georgia Tech Center for Music Technology\\
 	840 McMillan St. Atlanta, GA\\
 	chris.latina@gatech.edu}
@@ -194,7 +194,7 @@ w_{k} &=&  (1 - (d_{k} / {\sum\limits_{k = 1}^{K} d_{k}})) / (K-1)
  \end{eqnarray*}
  
 \subsubsection{Hierarchical Model: SVM and KNN } 
-Our third approach make use of both the SVM and KNN models in a hierarchical manner. First we used the the SVM to classify the genres using both the mean and standard deviation of MFCCs and our spectral features. Prior to refactoring our dataset, we achieved results of 55.4\% and 66.4\% accuracy for the interleaved and randomized segmentations respectively. After refactoring, however we saw our results decrease, due to the album effect. Since we intentionally targeted repeat songs and full albums present in the GTZAN dataset, our distribution of features expanded within each genre making it more difficult for the SVM to accurately perform classification. After refactoring, the accuracy for classifying genre was 51.5\% and 61.0\% for the interleaved and randomized segmentations respectively. The confusion matrices in Figure 3 describe these results.
+Our third approach make use of both the SVM and KNN models in a hierarchical manner. First we used the VLFeat SVM \cite{vedaldi2010vlfeat} to classify the genres using both the mean and standard deviation of MFCCs and our spectral features. Prior to refactoring our dataset, we achieved results of 55.4\% and 66.4\% accuracy for the interleaved and randomized segmentations respectively. After refactoring, however we saw our results decrease, due to the album effect. Since we intentionally targeted repeat songs and full albums present in the GTZAN dataset, our distribution of features expanded within each genre making it more difficult for the SVM to accurately perform classification. After refactoring, the accuracy for classifying genre was 51.5\% and 61.0\% for the interleaved and randomized segmentations respectively. The confusion matrices in Figure 3 describe these results.
 
 \begin{figure*}
   \includegraphics[width=0.5\textwidth]{figures/SVM_D_Confusion.png}

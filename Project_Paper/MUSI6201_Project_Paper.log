@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  6 DEC 2015 22:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  6 DEC 2015 22:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -345,21 +345,21 @@ File: figures/YearDist2.png Graphic file (type png)
 Package pdftex.def Info: figures/YearDist2.png used on input line 146.
 (pdftex.def)             Requested size: 241.84842pt x 181.38306pt.
  [2 <./figures/GTZAN1.png> <./figures/YearDist2.png (PNG copy)>] [3] <figures/S
-VM_D_Confusion.png, id=151, 562.1pt x 421.575pt>
+VM_D_Confusion.png, id=152, 562.1pt x 421.575pt>
 File: figures/SVM_D_Confusion.png Graphic file (type png)
 
 <use figures/SVM_D_Confusion.png>
 Package pdftex.def Info: figures/SVM_D_Confusion.png used on input line 200.
 (pdftex.def)             Requested size: 253.22952pt x 189.91927pt.
 
-<figures/SVM_R_Confusion.png, id=152, 562.1pt x 421.575pt>
+<figures/SVM_R_Confusion.png, id=153, 562.1pt x 421.575pt>
 File: figures/SVM_R_Confusion.png Graphic file (type png)
 
 <use figures/SVM_R_Confusion.png>
 Package pdftex.def Info: figures/SVM_R_Confusion.png used on input line 201.
 (pdftex.def)             Requested size: 253.22952pt x 189.91927pt.
 
-<figures/SVM_D_NEW_Confusion.png, id=153, 562.1pt x 421.575pt>
+<figures/SVM_D_NEW_Confusion.png, id=154, 562.1pt x 421.575pt>
 File: figures/SVM_D_NEW_Confusion.png Graphic file (type png)
 
 <use figures/SVM_D_NEW_Confusion.png>
@@ -367,7 +367,7 @@ Package pdftex.def Info: figures/SVM_D_NEW_Confusion.png used on input line 202
 .
 (pdftex.def)             Requested size: 253.22952pt x 189.91927pt.
 
-<figures/SVM_R_NEW_Confusion.png, id=154, 562.1pt x 421.575pt>
+<figures/SVM_R_NEW_Confusion.png, id=155, 562.1pt x 421.575pt>
 File: figures/SVM_R_NEW_Confusion.png Graphic file (type png)
 
 <use figures/SVM_R_NEW_Confusion.png>
@@ -402,10 +402,10 @@ Package rerunfilecheck Info: File `MUSI6201_Project_Paper.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 438.
  ) 
 Here is how much of TeX's memory you used:
- 5925 strings out of 493089
- 86760 string characters out of 6134842
- 179881 words of memory out of 5000000
- 9303 multiletter control sequences out of 15000+600000
+ 5923 strings out of 493089
+ 86697 string characters out of 6134842
+ 179836 words of memory out of 5000000
+ 9302 multiletter control sequences out of 15000+600000
  18923 words of font info for 42 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  29i,13n,29p,1100b,342s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -423,10 +423,10 @@ f-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fon
 ts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/
 urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/
 utmri8a.pfb>
-Output written on MUSI6201_Project_Paper.pdf (6 pages, 270087 bytes).
+Output written on MUSI6201_Project_Paper.pdf (6 pages, 269860 bytes).
 PDF statistics:
  226 PDF objects out of 1000 (max. 8388607)
  195 compressed objects within 2 object streams
- 44 named destinations out of 1000 (max. 500000)
+ 43 named destinations out of 1000 (max. 500000)
  223 words of extra memory for PDF output out of 10000 (max. 10000000)
 
