@@ -57,12 +57,12 @@
 
 %Are there new insights through computational methods to the problem of getting song's year? This project is motivated by combining traditional music information retrieval (hereafter referred to as MIR) approach and metadata of song to compute a song's decade.  Our task is to determine whether a heirarchical approach to classification using genre can help predict other metadata about a set of audio clips, such as the year of release. While genre classification is a common MIR problem, we set out to investigate whether one can use audio features in conjunction with metadata cross referenced with Discogs to estimate a song's decade.
 
-Is it possible to compute a song's decade using only an audio clip? This paper describes an algorithm that makes use of instantaneous audio features, metadata, and traditional machine learning algorithms to estimate a song's decade. Inspired by the accuracy and consistency of the Discogs database, we wanted to apply the approaches commonly used to classify genre to additional song and album metadata. Our task is to determine which features are most relevant for the task and more generically, whether a hierarchical approach to classification using genre can help predict other metadata about a set of audio clips, such as the year of release.
+Is it possible to compute a song's decade from a short audio clip? This paper describes an algorithm that makes use of instantaneous audio features, metadata, and traditional machine learning algorithms to estimate a song's decade. Inspired by the accuracy and consistency of the Discogs database, we wanted to apply the approaches commonly used to classify genre to additional song and album metadata. Our task is to determine which features are most relevant for the task and more generically, whether a hierarchical approach to classification using genre can help predict other metadata about a set of audio clips, such as the year of release.
 
 \end{abstract}
 %
 \begin{keywords}
-Year computation, MIR, GTZAN
+Year Computation, Machine Learning, Audio Content Analysis, MIR, GTZAN
 \end{keywords}
 %
 \section{Introduction}
@@ -70,15 +70,13 @@ Year computation, MIR, GTZAN
 
 MIR is an active field of machine learning research. Users of online music services are very likely to search for music by genre or style, so researchers have attempted to understand how to automatically classify music by these labels. For instance, overarching genres like rock or disco likely exhibit enough distinction for computers to effectively distinguish between them \cite{diab1musical}.
 
-Besides, dataset working as not only training but also testing tool for machine learning model plays significant role without doubt. Many datasets that exist for genre classification but only contain the minimum amount of information, namely the audio snippet and a label. Recently, researchers are taking effort to create more complete and accurate dataset in different ways. One of them is using music metadata as supplementary to the existing data in terms of providing music-related information like the name of the song, and album, also the year and price of release.
+The dataset used for training and testing the machine learning model plays a significant role in its results. Many datasets that exist for genre classification only contain the minimum amount of information, namely the audio snippet and a label. Recently, researchers are taking effort to compile more complete and accurate datasets in different ways. One approach is to supplement the existing data by providing music-related metadata information such as the song title, album name, year and even price of the release.
 
-Discogs is an user-sourced database and marketplace for album releases on vinyl, cassette, CD, and digital formats. Unlike last.fm, the data is extremely complete and accurate because it is heavily moderated. Notably, all releases have a "master format", often chronologically the first release with metadata such as genre, styles (subgenres), and year.
+Discogs.com is an user-sourced database and marketplace for album releases on vinyl, cassette, CD, and digital formats. Unlike last.fm, the data is extremely complete and accurate because the website is heavily moderated. Notably, the Discogs API mentions that each release has a ``master format", typically the first release chronologically along with metadata such as genre, styles (subgenres), and year.
 
 % maybe talk about digital7 here???
 
 In this paper, the problem of automatically computing song's decade is addressed. More specifically, using the combination of traditional music genre classification approach and music metadata to estimate the year of a song are proposed. Although there has been significant works in the development of music information retrieval especially for genre classification, there has been relatively little work in the development of song's year or decade computation.
-
-The paper is structured as follows. A review of related work is provided in Section 2. Algorithm overview, feature set description and dataset creation are in section 3. Then, section 4 deal with the automatic classification and evaluation of the proposed feature and section 5 with conclusion. Finally, the future work is presented in section 6.
 
 %==========================================
 \section{Related Work}
@@ -87,7 +85,7 @@ The paper is structured as follows. A review of related work is provided in Sect
 
 Style is a vague term that may be understood in different ways depending on the context in which it is employed. Unlike the majority of other artistic disciplines, music is usually considered as not being able to generate creative work directly from the concrete reality \cite{leichtentritt1945aesthetic}. As a result, style is slightly different in music than in literature, painting or sculpture. According to Dannenberg, it is almost impossible to find any obvious objective meaning, or referent associated with a short melody without words \cite{dannenberg2010style}. Essentially, every aspect of melody that communicates with listener is an aspect of style. One would say style is everything in music, or everything in music is style.
 
-In music, like in other forms of art, style represents a classification of the medium. Likewise, a style is often associated with an era. Art historians often map the trajectory of the two in order to decipher to influence of one school of artists on another. In regards to classification with metadata, "Computation Analysis Of Musical Influence" by Nick Collins mentions "...sourcing data from allmusic.com, and utilising python APIs for last.fm, EchoNest, and MusicBrainz." In his approach, Collins also cross referenced the year of the primary release with Discogs.com for accuracy. This paper touches upon the idea of a more semantic understanding of the output of classifiers. 
+In music, like in other forms of art, style represents a classification of the medium. Likewise, a style is often associated with an era. Art historians often map the trajectory of the two in order to decipher the influence of one school of artists on another. In regards to classification with metadata, ``Computation Analysis Of Musical Influence" by Nick Collins mentions ``...sourcing data from allmusic.com, and utilising python APIs for last.fm, EchoNest, and MusicBrainz." In his approach, Collins also cross referenced the year of the primary release with Discogs.com for accuracy. This paper touches upon the idea of a more semantic understanding of the output of classifiers. 
 
 In that effort, several papers have explored the efficacy of learning algorithms to predict genres. In his paper, George Tzanetakis effectively classified genres on live radio broadcasts using a Gaussian classifier \cite{tzanetakis2002musical}. Mandel used Support Vector Machine (hereafter referred to as \textit{SVM}) on artist and album-level features to make similar classification as well \cite{mandel2005song}. Also, another study explored mixtures of Gaussians and K-Nearest-Neighbors (hereafter referred to as \textit{KNN}) for music classification \cite{li2003comparative}. Each of these studies used similar features - Mel-Frequency Cepstral Coefficients (hereafter referred to as \textit{MFCC}) and chroma features of audio to make the classification.
 
