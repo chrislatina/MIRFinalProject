@@ -1,9 +1,16 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{diab1musical}
 Omar Diab, Anthony Manero, and Reid Watson,
 \newblock ``Musical genre tag classification with curated and crowdsourced
   datasets,'' .
+
+\bibitem{bertin2011million}
+Thierry Bertin-Mahieux, Daniel~PW Ellis, Brian Whitman, and Paul Lamere,
+\newblock ``The million song dataset,''
+\newblock in {\em ISMIR 2011: Proceedings of the 12th International Society for
+  Music Information Retrieval Conference, October 24-28, 2011, Miami, Florida}.
+  University of Miami, 2011, pp. 591--596.
 
 \bibitem{leichtentritt1945aesthetic}
 Hugo Leichtentritt,

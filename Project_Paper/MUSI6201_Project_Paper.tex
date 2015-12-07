@@ -70,7 +70,7 @@ Year Computation, Machine Learning, Audio Content Analysis, MIR, GTZAN
 
 MIR is an active field of machine learning research. Users of online music services are very likely to search for music by genre or style, so researchers have attempted to understand how to automatically classify music by these labels. For instance, overarching genres like rock or disco likely exhibit enough distinction for computers to effectively distinguish between them \cite{diab1musical}.
 
-The dataset used for training and testing the machine learning model plays a significant role in its results. Many datasets that exist for genre classification only contain the minimum amount of information, namely the audio snippet and a label. Recently, researchers are taking effort to compile more complete and accurate datasets in different ways. One approach is to supplement the existing data by providing music-related metadata information such as the song title, album name, year and even price of the release.
+The dataset used for training and testing the machine learning model plays a significant role in its results. Many datasets that exist for genre classification only contain the minimum amount of information, namely the audio snippet and a label. Recently, researchers are taking effort to compile more complete and accurate datasets in different ways \cite{bertin2011million}. One approach is to supplement the existing data by providing music-related metadata information such as the song title, album name, year and even price of the release.
 
 Discogs.com is an user-sourced database and marketplace for album releases on vinyl, cassette, CD, and digital formats. Unlike last.fm, the data is extremely complete and accurate because the website is heavily moderated. Notably, the Discogs API mentions that each release has a ``master format", typically the first release chronologically along with metadata such as genre, styles (subgenres), and year.
 
@@ -83,7 +83,7 @@ In this paper, the problem of automatically computing song's decade is addressed
 \label{sec:related}
 
 
-Style is a vague term that may be understood in different ways depending on the context in which it is employed. Unlike the majority of other artistic disciplines, music is usually considered as not being able to generate creative work directly from the concrete reality \cite{leichtentritt1945aesthetic}. As a result, style is slightly different in music than in literature, painting or sculpture. According to Dannenberg, it is almost impossible to find any obvious objective meaning, or referent associated with a short melody without words \cite{dannenberg2010style}. Essentially, every aspect of melody that communicates with listener is an aspect of style. One would say style is everything in music, or everything in music is style.
+%Style is a vague term that may be understood in different ways depending on the context in which it is employed. Unlike the majority of other artistic disciplines, music is usually considered as not being able to generate creative work directly from the concrete reality \cite{leichtentritt1945aesthetic}. As a result, style is slightly different in music than in literature, painting or sculpture. According to Dannenberg, it is almost impossible to find any obvious objective meaning, or referent associated with a short melody without words \cite{dannenberg2010style}. Essentially, every aspect of melody that communicates with listener is an aspect of style. One would say style is everything in music, or everything in music is style.
 
 In music, like in other forms of art, style represents a classification of the medium. Likewise, a style is often associated with an era. Art historians often map the trajectory of the two in order to decipher the influence of one school of artists on another. In regards to classification with metadata, ``Computation Analysis Of Musical Influence" by Nick Collins mentions ``...sourcing data from allmusic.com, and utilising python APIs for last.fm, EchoNest, and MusicBrainz." In his approach, Collins also cross referenced the year of the primary release with Discogs.com for accuracy. This paper touches upon the idea of a more semantic understanding of the output of classifiers. 
 
@@ -114,12 +114,7 @@ The Spectral Centroid (hereafter referred to as \textit{SC}) is defined as the c
 \begin{equation*}\label{eq:centroid}
 \mathrm{SC}(n) = \frac{\sum\limits_{k = 0}^{\mathcal{K}/2-1}{k\cdot |X(k,n)|^2}}{\sum\limits_{k = 0}^{N/2-1}{|X(k,n)|^2}}
 			\end{equation*}
-			
 
-%\subsubsection{Instantaneous Feature}
-%\label{subsubsec:instantaneous}
-
-%\paragraph{Spectral Flux}
 The Spectral Flux (hereafter referred to as \textit{SF}) measures the amount of change of the spectral shape. It is defined as the average difference between consecutive STFT frames: (should be an equation here).
 
 
@@ -129,7 +124,7 @@ The Spectral Flux (hereafter referred to as \textit{SF}) measures the amount of 
 
 \subsection{Dataset Creation}
 \label{subsec:dataset}
-In this research, we selected GTZAN as our starting dataset. George Tzanetakis created GTZAN specifically for machine learning analysis of genre classification problems. Although this dataset has been documented to have non-negligible issues such as "album effect" with repeated audio samples which would negatively influence the accuracy of the classification \cite{sturm2013gtzan}, it still can be seen as the default choice in the research area of music genre classification. Figure 1 represents the degree of activity of GTZAN.
+In this research, we selected GTZAN as our starting dataset. George Tzanetakis created GTZAN specifically for machine learning analysis of genre classification problems. This dataset has been documented to have non-negligible issues such as "album effect" with repeated audio samples which would negatively influence the accuracy of the classification \cite{sturm2013gtzan}, it still can be seen as the default choice in the research area of music genre classification. Figure 1 represents the degree of activity of GTZAN.
 
 \begin{figure}[htb]
 \begin{minipage}[b]{1.0\linewidth}
@@ -141,7 +136,9 @@ In this research, we selected GTZAN as our starting dataset. George Tzanetakis c
 \end{minipage}
 \end{figure}
 
-We used a modified version of the GTZAN dataset augmented by metadata and preview audio clips sourced form 7digital.com. After creating the list of files with the song name and artist, downloading and trimming the files, we used a set of scripts queries the discogs database and constructs a more complete dataset with Artist, Title, Album, Genre, Styles, and year of master release. Our dataset started as 1000 songs from 10 genres but many of the audio clips lacked information, genres groups contained duplicate songs, or entire albums. In an attempt to maintain accuracy, reduce the album effect, and distribute the years represented, we reduced the dataset to 7 genres with 60 songs in each genre. The majority of these are from GTZAN with some instances added from 7digital.com. We used the 7digital API endpoint interface to search within genres and scrape the preview clip. Although some of the previews from 7digital represent remastered versions, we cross referenced with the Discogs master release for consistency.  Ideally, the dataset would have an even distribution of songs spanning the range of all years without repeated artists. The final dataset consists of 420 audio clips in total with genres Blues, Country, Disco, Hip Hop, Metal, Pop, Rock. Any additional track samples added from 7digital were cut to 30 seconds in length using ffmpeg. Metadata was then scraped from Discogs.com API using python.
+We used a modified version of the GTZAN dataset augmented by metadata and preview audio clips sourced form 7digital.com. Our dataset started as 1000 songs from 10 genres but many of the audio clips lacked information. Furthermore, genre groups contained duplicate songs or entire albums. In an attempt to reduce the album effect and distribute the years represented, we reduced the dataset to 7 genres with 60 songs in each. We used the 7digital API endpoint interface to search within genres and scrape for additional preview clips to remove redundant data.
+
+After creating the list of files with the artist and song name, metadata was then scraped from Discogs.com API using python. This metadata included artist, title, album name, genre, styles, and year of master release. Although some of the previews from 7digital represent remastered versions, we cross referenced with the Discogs master release for consistency.  Ideally, the dataset would have an even distribution of songs spanning the range of all years without repeated artists. The final dataset consists of 420 audio clips in total with genres Blues, Country, Disco, Hip Hop, Metal, Pop, Rock. Any additional track samples added from 7digital were cut to 30 seconds in length using ffmpeg. All songs were 30 second long 44.1k 16bit .wav or .au files.
 
 \begin{figure}[htb]
 \begin{minipage}[b]{1.0\linewidth}
@@ -156,7 +153,8 @@ We used a modified version of the GTZAN dataset augmented by metadata and previe
 
 \subsection{Classification}
 \label{subsec:classification}
-For classification, variations of SVM and KNN were used. The idea of applying two different approaches to achieve year computation attempts to maximize the accuracy of year computation, but comparing the suitability of this two basic statistical pattern recognition (hereafter referred to as \textit{SPR}) classifiers. Essentially, SPR is applied to estimate the probability density function (hereafter referred to as \textit{PDF}) for the feature vectors of each class. 
+For classification, variations of two basic statistical pattern recognition (hereafter referred to as \textit{SPR}) algorithms were used: SVM and KNN. Essentially, an SPR is applied to estimate the probability density function for the feature vectors of each class. This paper compares the suitability of these two SPR classifiers to maximize the accuracy of computing a song's year.
+
 %===========================================
 \section{Evaluation}
 \label{sec:evaluation}
@@ -165,18 +163,18 @@ For classification, variations of SVM and KNN were used. The idea of applying tw
 \label{subsec:methodology}
 
 \subsubsection{N-fold Validation}
-N-fold was applied in the research in order to perform multiple iteration of classification for evaluation. The dataset contains 7 genres with 60 songs each (420 songs in total). We set the number of folds to 6 to evenly distribute the genres represented in the training and test sets. This way, for each fold, the training set contains 350 songs and the test set contains 70 songs, with 10 songs from each genre.
+N-fold was applied to perform multiple iterations of classification for evaluation. The dataset contains 7 genres with 60 songs each (420 songs in total). An N value of 6 evenly distributes the genres represented in the training and test sets. This way, for each fold, the training set contains 350 songs and the test set contains 70 songs, with 10 songs from each genre.
 
 \subsubsection{Segmentation of Data}
 The data was segmented into training and testing pools using two techniques. The results were quite different and tie into some fundamental concepts of dataset creation. One approach was an interleaved distribution. The second was a randomized distribution. 
 
-For the interleaved distribution, the feature set was read in order adding one song from each genre at a time. Feature set was read from a tab-delimted file containing the song's metadata including artist name, album, title, genre, year and filename ordered by genre, artist, and then album alphabetically . Because there were instances of multiple songs by an artist from the same album, the distributed segmentation approach separates songs from one album occurring in both the training and test set, thus removing the risk of the ``artist effect", ``album effect". In his paper, Seyerlehner argues that it is relatively easy to identify songs by one and the same artist using audio similarity algorithm \cite{seyerlehner2010fusing}. This effect is known as artist effect. In some cases, even album-specific production effects are reflected in the spectral representation of songs, which is respectively called "album effect". Obviously, songs by the same artist will tend to belong to the same genre, and the ability to recognize the genre by specific production effect is not what this research intend to measure. However, this also the worst case scenario, because the training and test set will always be very different from each other. 
+For the interleaved distribution, the feature set was read in order adding one song from each genre at a time. Because there were instances of multiple songs by an artist from the same album, the distributed segmentation approach separates songs from one album occurring in both the training and test set, thus removing the risk of the ``artist effect" or ``album effect". In his paper, Seyerlehner argues that it is relatively easy to identify songs by one and the same artist using audio similarity algorithm \cite{seyerlehner2010fusing}. This effect is known as artist effect. In some cases, even album-specific production effects are reflected in the spectral representation of songs, which is respectively called "album effect". Obviously, songs by the same artist will tend to belong to the same genre, and the ability to recognize the genre by specific production effect is not what this research intend to measure. However, this also the worst case scenario, because the training and test set will always be very different from each other. 
 
 For the randomized distribution, a seed is generated for the entire feature set and applied to all songs and metadata, completely randomizing the order. This creates a potentially even distribution of genres within each fold for the training and test sets. It greatly increases the chance of the album effect, however, because songs from the same album that were previously only in the training set now can appear in the test set as well.
 
 \subsubsection{Feature Selection} 
 
-After attempting to select features with forward selection, we  manually selected features, mimicking a backward selection approach. Trying logical combinations of feature groups proved to be more successful. In general, MFCCs and subsets of MFCCs outperformed other feature combinations. Our main groups were the mean and standard deviations of MFCCs, Spectral Centroid, and Spectral flux as mentioned in section 3. We also tested mean and standard deviation of Pitch Chroma, however this never resulted in improvement. 
+After attempting to select features with forward selection, we  manually selected features, mimicking a backward selection approach. Testing logical combinations of feature groups proved to be more successful. In general, MFCCs and subsets of MFCCs outperformed other feature combinations. Our main groups were the mean and standard deviations of MFCCs, spectral centroid, and spectral flux as mentioned in section 3.1. We also tested mean and standard deviation of Pitch Chroma, however this never resulted in improvement. 
 
 \subsection{Metrics}
 We tested four variations on the KNN and SVM algorithms for each of the two segmentation approaches. For the random distribution, each attempt was the mean of the same 6-fold process described in section 4.1.1. The seed and therefore the result changed with each run, so the result given is the best of 10 runs to show the lower boundary. 
@@ -187,10 +185,10 @@ The SVM Regression was performed on the year data only, as genres can only be cl
 
 \subsubsection{KNN of Year}
 
-The second approach used only the KNN directly on the year label, with no genre influence. This was surprisingly the simplest but most effective result. We achieved our best results using a K value of 7 with only the mean of MFCCs as features. This resulted in a mean error of 8.751 years and 8.015 years for the interleaved segmentation and randomized segmentation respectively. Our KNN algorithm, uses a weighting function calculated by the euclidean distance as a method to give priority over closer results. 
+The second approach used only the KNN directly on the year label, with no genre influence. This was surprisingly the simplest but most effective result. We achieved our best results using a K value of 7 with only the mean of MFCCs as features. This resulted in a mean error of 8.751 years and 8.015 years for the interleaved segmentation and randomized segmentation respectively. Our KNN algorithm, uses an inverse weighting function calculated by the euclidean distance as a method to give priority over nearer results. 
 
 \subsubsection{Hierarchical Model: SVM and KNN } 
-Our third approach make use of both the SVM and KNN models in a hierarchical manner. First we used the the SVM to classify the genres using both the mean and standard deviation of MFCCs and our spectral features. Prior to refactoring our dataset, we achieved results of 55.4\% and 66.4\% accuracy for the interleaved and randomized segmentations respectively. After refactoring, however we saw our results decrease, due to the album effect. Since we intentionally targeted repeat songs and full albums present in the GTZAN dataset, our distribution of features expanded within each genre making it more difficult for the SVM to accurately perform classification. After refactoring, the accuracy for classifying genre was 51.5\% and 61.0\% for the interleaved and randomized segmentations respectively. 
+Our third approach make use of both the SVM and KNN models in a hierarchical manner. First we used the the SVM to classify the genres using both the mean and standard deviation of MFCCs and our spectral features. Prior to refactoring our dataset, we achieved results of 55.4\% and 66.4\% accuracy for the interleaved and randomized segmentations respectively. After refactoring, however we saw our results decrease, due to the album effect. Since we intentionally targeted repeat songs and full albums present in the GTZAN dataset, our distribution of features expanded within each genre making it more difficult for the SVM to accurately perform classification. After refactoring, the accuracy for classifying genre was 51.5\% and 61.0\% for the interleaved and randomized segmentations respectively. The confusion matrices in Figure 3 describe these results.
 
 \begin{figure*}
   \includegraphics[width=0.5\textwidth]{figures/SVM_D_Confusion.png}
@@ -202,38 +200,33 @@ Our third approach make use of both the SVM and KNN models in a hierarchical man
 \end{figure*}
 
 
-After classifying genre, we used the predicted genre for each test song and ran KNN to find the nearest neighbors to compute the year. The selection used to run KNN, however, only found the nearest neighbors within the genre predicted for each song. IE, if we predicted a song to be country, KNN only selects the country songs in the current training fold. Using a value of K=9 gave the best results. Our average mean error in calculating the year was 12.132 and 11.602 years for interleaved segmentation and randomized segmentation respectively. 
+After classifying genre, we used the predicted genre for each test song and ran KNN to find the nearest neighbors to compute the year. The selection used to run KNN, however, only found the nearest neighbors within the genre predicted for each song. For example, if we predicted a song to be country, KNN only selects the country songs in the current training fold. Using a value of K=9 gave the best results. Our average mean error in calculating the year was 12.132 and 11.602 years for interleaved segmentation and randomized segmentation respectively. 
 
 \subsubsection{Hierarchical Model: KNN with Ground Truth Genre} 
 
-The final approach removed genre prediction and simply used the ground truth metadata of the test set. The KNN was run again for each audio clip in the test set against using the actual genre metadata for that track. Again, it limited the selection of features from the training set to those that matched the clip's genre. This showed improvement over both the predicted hierarchical model and the SVM using Regression techniques. After tuning the feature set to use only the mean MFCCS numbers 6 through 12, we achieved an average mean error of 12.412 and 11.926 years for interleaved segmentation and randomized segmentation respectively. Interestingly enough, the result was slightly worse than using the trained genre rather than the ground truth. Realizing that optimizing the features selected for the genre when it is not actually used, we experimented with modifying the active features to tune it to the years. We found that using only mean MFCCs 6 through 12 resulted in a mean error of 
-11.136 and 11.670 years for interleaved segmentation and randomized segmentation respectively. 
+The final approach removed genre prediction and simply used the ground truth metadata of the test set. The KNN was run again for each audio clip in the test set against using the actual genre metadata for that track. Again, it limited the selection of features from the training set to those that matched the clip's genre. For consistency, we ran this test using both the mean and standard deviation of MFCCs and our spectral features, achieving an average mean error of 12.412 and 11.926 years for interleaved segmentation and randomized segmentation respectively. Interestingly enough, the result was slightly worse than using the trained genre rather than the ground truth. Realizing that optimizing the features selected for the genre when it is not actually used, we experimented with modifying the active features to tune it to computing the year. We found that using only mean MFCCs 6 through 12 resulted in a mean error of 11.136 and 11.670 years for interleaved segmentation and randomized segmentation respectively. 
 
 %============================================
 \section{conclusion}
 
-Overall, the KNN with features tuned for the calculating the year worked best. The hierarchical model did show improvement in relation to the SVM but only slightly. It still underperformed in comparison with KNN. Our results were very dependent upon the dataset construction and any flaws within the dataset. 
+Overall, the KNN of Year method using the mean of MFCCs as features worked best. The hierarchical model did show improvement in relation to the SVM but only slightly. It still underperformed in comparison with KNN. Our results were very dependent upon the dataset construction and any flaws within the dataset. 
 
 Forward selection did not prove successful when using MFCCs and Spectral data. The algorithm results would decrease and return before grouping all MFCCs. Manually tuning by finding subsets and groupings of mean and standard deviation of MFCCs with the spectral features proved most effective. Adding Pitch Chroma was ineffective and only generated worse results for both genre and year. When constructing a feature set by calculating the mean and standard deviation of pitch chroma, the temporal resolution is lost.
 
-In each genre, many of the songs are from only a few albums. Training and testing for the genre or style classification with GTZAN is more likely doing the album classification. This ``album" effect heavily influences the genre classification albeit positively, however this is actually incorrect. The effort of improving GTZAN with discogsand 7digital did slightly improve the accuracy of the year computation. Essentially, by importing new songs and abandoning several songs that belong to the same album, the augmented dataset is more even distributed by year. This is not only beneficial for decreasing the ``album effect'', but also increasing the possibility of computing the year correctly.
+In each genre, many of the songs are from only a few albums. Training and testing for the genre or style classification with GTZAN is more likely doing the album classification. This ``album" effect heavily influences the genre classification albeit positively, however this is actually incorrect. Essentially, by importing new songs and abandoning several songs that belong to the same album, the augmented dataset is more even distributed by year.
 
 %============================================
 \section{Future Work}
 \label{sec: future}
 
 \subsection{Dataset Modification}
-Since the GTZAN dataset was incomplete with the basic artist and song title tags and contained duplicate songs, our resulting dataset was small. Ideally, the size of the dataset should be twice that of what we used. A small dataset can lead to automatic selection and neglect potentially useful features. To train a qualified year computation system, a large dataset with evenly distributed audio samples spanning many years and genres is necessary. This does take quite a long time, however the scripts provided to scrape metadata from Discogs in conjunction with the 7digital audio preview scraping may be a good solution to this problem.
+In our research, the ``album effect" and the size of the dataset are two non-negligible issues.  Since the GTZAN dataset was incomplete with the basic artist and song title tags and contained duplicate songs, our resulting dataset was small. Ideally, the size of the dataset should be at least twice that of what was used. A small dataset can lead to automatic selection and neglect potentially useful features. To train a qualified year computation system, a large dataset with evenly distributed audio samples spanning many years and genres is necessary. This does take quite a long time, however the scripts provided to scrape metadata from Discogs in conjunction with the 7digital audio preview scraping may be a good solution to this problem.
 
 \subsection{Feature Extraction}
-In this research, timbral texture features and spectral features are extracted from the audio sample and used for training the system. However, rhythmic features like beat histogram are not exploited. With the rhythmic feature, the performance of system would be enhanced.
-
+In this research, timbral texture features and spectral features are extracted from the audio sample and used for training the system. However, rhythmic features like beat histogram are not employed. With the rhythmic features, the performance of system should improve.
 
 \subsection{Classification}
-SVM and KNN as statistical pattern recognition models are widely used in the research of MIR. Recently, deep learning methods, especially convolutional neural network (also known as the CNN) has become more and more popular in this research area. Convolutional neural networks, characterized by a multi-layer structure, sparse connectivity, and weight sharing has already improved the performance of music genre classifiers and chord detectors. Combining CNN with audio features may help improve the accuracy of song's decade computation.
-
-\subsection{Dataset Enhancement}
-In our research, the ``album effect" and the size of the dataset are two non-negligible issues. In order to remove the album effect, the self-contained metadata of songs should be well-organized with the audio sample. The database and its API such as discog and digital7 should be fully employed of building and enhancing the dataset. 
+SVM and KNN as statistical pattern recognition models are widely used in the research of MIR. Recently, deep learning methods, especially convolutional neural networks (also known as CNNs) have become more and more popular in this research area. Convolutional neural networks, characterized by a multi-layer structure, sparse connectivity, and weight sharing have already improved the performance of music genre classifiers and chord detectors. Combining CNN with audio features may help improve the accuracy of song's decade computation.
 
 %============================================
 %\section{Formatting your paper}
