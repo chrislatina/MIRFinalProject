@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  6 DEC 2015 21:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  6 DEC 2015 22:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -349,21 +349,21 @@ VM_D_Confusion.png, id=151, 562.1pt x 421.575pt>
 File: figures/SVM_D_Confusion.png Graphic file (type png)
 
 <use figures/SVM_D_Confusion.png>
-Package pdftex.def Info: figures/SVM_D_Confusion.png used on input line 194.
+Package pdftex.def Info: figures/SVM_D_Confusion.png used on input line 200.
 (pdftex.def)             Requested size: 253.22952pt x 189.91927pt.
 
 <figures/SVM_R_Confusion.png, id=152, 562.1pt x 421.575pt>
 File: figures/SVM_R_Confusion.png Graphic file (type png)
 
 <use figures/SVM_R_Confusion.png>
-Package pdftex.def Info: figures/SVM_R_Confusion.png used on input line 195.
+Package pdftex.def Info: figures/SVM_R_Confusion.png used on input line 201.
 (pdftex.def)             Requested size: 253.22952pt x 189.91927pt.
 
 <figures/SVM_D_NEW_Confusion.png, id=153, 562.1pt x 421.575pt>
 File: figures/SVM_D_NEW_Confusion.png Graphic file (type png)
 
 <use figures/SVM_D_NEW_Confusion.png>
-Package pdftex.def Info: figures/SVM_D_NEW_Confusion.png used on input line 196
+Package pdftex.def Info: figures/SVM_D_NEW_Confusion.png used on input line 202
 .
 (pdftex.def)             Requested size: 253.22952pt x 189.91927pt.
 
@@ -371,35 +371,35 @@ Package pdftex.def Info: figures/SVM_D_NEW_Confusion.png used on input line 196
 File: figures/SVM_R_NEW_Confusion.png Graphic file (type png)
 
 <use figures/SVM_R_NEW_Confusion.png>
-Package pdftex.def Info: figures/SVM_R_NEW_Confusion.png used on input line 197
+Package pdftex.def Info: figures/SVM_R_NEW_Confusion.png used on input line 203
 .
 (pdftex.def)             Requested size: 253.22952pt x 189.91927pt.
 
-Overfull \hbox (1.90002pt too wide) in paragraph at lines 194--199
+Overfull \hbox (1.90002pt too wide) in paragraph at lines 200--205
 [][] []
  []
 
 
-Overfull \hbox (1.90002pt too wide) in paragraph at lines 194--199
+Overfull \hbox (1.90002pt too wide) in paragraph at lines 200--205
 [] [] 
  []
 
 [4] [5 <./figures/SVM_D_Confusion.png (PNG copy)> <./figures/SVM_R_Confusion.pn
 g (PNG copy)> <./figures/SVM_D_NEW_Confusion.png (PNG copy)> <./figures/SVM_R_N
 EW_Confusion.png (PNG copy)>] (./MUSI6201_Project_Paper.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 432.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 438.
  [6
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 432.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 438.
 
 (./MUSI6201_Project_Paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 432.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 432.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 438.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 438.
 Package rerunfilecheck Info: File `MUSI6201_Project_Paper.out' has not changed.
 
 (rerunfilecheck)             Checksum: 38A9F383895B2DF324C95A3C7C725DA8;1665.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 432.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 438.
  ) 
 Here is how much of TeX's memory you used:
  5925 strings out of 493089
@@ -423,7 +423,7 @@ f-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fon
 ts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/
 urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/
 utmri8a.pfb>
-Output written on MUSI6201_Project_Paper.pdf (6 pages, 267506 bytes).
+Output written on MUSI6201_Project_Paper.pdf (6 pages, 270087 bytes).
 PDF statistics:
  226 PDF objects out of 1000 (max. 8388607)
  195 compressed objects within 2 object streams
