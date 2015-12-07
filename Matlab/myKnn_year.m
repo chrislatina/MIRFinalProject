@@ -1,4 +1,4 @@
-function [estimated_genres, estimated_years] = myKnn_genre(trainLabel, trainData, testData, K, yearsLabel)
+function [estimated_genres, estimated_years] = myKnn_year(trainLabel, trainData, testData, K, yearsLabel)
 
 % k-Nearest Neighbor (Knn)
 

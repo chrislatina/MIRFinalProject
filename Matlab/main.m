@@ -5,7 +5,7 @@ clear;
 clear;
 
 
-%% Include vl_feat for the svm
+%% Include vl_feat for the svm. If you don't have this installed, download at www.vlfeat.org
 run('/Users/chrislatina/Documents/GeorgiaTech/F15/Comp Vision/Assignment 4/vlfeat-0.9.20/toolbox/vl_setup')
 % run('/Users/musictechnology/Dropbox/Fall_2015/6476CS_CV/Projects/proj3/vlfeat-0.9.20/toolbox/vl_setup')
 
@@ -23,7 +23,7 @@ folderPath = '/Users/chrislatina/Documents/GeorgiaTech/F15/MIR/FinalProject/Data
 % Read in Data
 dataPath = '/Users/chrislatina/Documents/Sites/MIRFinalProject/GTZAN60.txt';
 % dataPath = '/Users/musictechnology/Desktop/MIRFinalProject/GTZAN60.txt';
-%%
+%%  
 % Extract Features -- if already loaded, just load from the file
 if ~exist('features_final.mat', 'file')
     [features, genres, years] = getMetaData(dataPath, folderPath, windowSize, hopSize);

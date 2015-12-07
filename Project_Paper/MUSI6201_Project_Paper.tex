@@ -185,7 +185,7 @@ The SVM Regression was performed on the year data only, as genres can only be cl
 
 \subsubsection{KNN of Year}
 
-The second approach used only the KNN directly on the year label, with no genre influence. This was surprisingly the simplest but most effective result. We achieved our best results using a K value of 7 with only the mean of MFCCs as features. This resulted in a mean error of 8.751 years and 8.015 years for the interleaved segmentation and randomized segmentation respectively. Our KNN algorithm uses an inverse weighting function calculated by the euclidean distance as a method to give priority over nearer results, shown below.
+The second approach used only the KNN directly on the year label, with no genre influence. This was surprisingly the simplest but most effective result. We achieved our best results using a K value of 7 with only the mean of MFCCs as features. This resulted in a mean error of 8.751 years and 7.976 years for the interleaved segmentation and randomized segmentation respectively. Our KNN algorithm uses an inverse weighting function calculated by the euclidean distance as a method to give priority over nearer results, shown below.
 \begin{eqnarray*}
 w_{k} &=&  (1 - (d_{k} / {\sum\limits_{k = 1}^{K} d_{k}})) / (K-1)
  \end{eqnarray*}

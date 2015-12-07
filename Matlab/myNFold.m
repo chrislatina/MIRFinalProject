@@ -109,7 +109,7 @@ for i = 1:nFold
 %     estimated_years(:,i) = reScaleYear(estimated_years(:,i));
 
     %% Run K-NN to calculate Year and Genre distances
-    [estimated_genres(:,i), estimated_years(:,i)] = myKnn_genre(train_genres, train_feat, test_feat, 7, train_years);
+    [estimated_genres(:,i), estimated_years(:,i)] = myKnn_year(train_genres, train_feat, test_feat, 7, train_years);
     
     %% For each track, calculate year: run K-NN for the specific genre selected.
 %     for j=1:length(estimated_genres)
