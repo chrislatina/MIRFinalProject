@@ -17,12 +17,12 @@ hopSize = 1024;
 %%
 % Folder path
 folderPath = '/Users/chrislatina/Documents/GeorgiaTech/F15/MIR/FinalProject/Dataset';
-% folderPath = '/Users/musictechnology/Desktop/Dataset';
+% folderPath = '/Users/musictechnology/Desktop/Dataset_5';
 
 %%
 % Read in Data
 dataPath = '/Users/chrislatina/Documents/Sites/MIRFinalProject/GTZAN60.txt';
-%dataPath = '/Users/musictechnology/Desktop/MIRFinalProject/GTZAN60.txt';
+% dataPath = '/Users/musictechnology/Desktop/MIRFinalProject/GTZAN60.txt';
 %%
 % Extract Features -- if already loaded, just load from the file
 if ~exist('features_final.mat', 'file')
@@ -47,7 +47,9 @@ end
 features = [features, spectral_features];
 
 %4:8 27 
-[ diff_genres, diff_years] = myNFold(years, genres, features, 6, [1:30], 3);
+[ diff_genres, diff_years] = myNFold(years, genres, features, 6, [1:13], 3);
 
 a_genre_rate = mean(diff_genres(:));
 a_year_rate = mean(diff_years(:));
+
+
