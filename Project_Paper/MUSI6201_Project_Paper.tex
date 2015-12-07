@@ -134,11 +134,10 @@ The Spectral Flux (hereafter referred to as \textit{SF}) measures the amount of 
 In this research, we selected GTZAN as our starting dataset. George Tzanetakis created GTZAN specifically for machine learning analysis of genre classification problems. Although this dataset has been documented to have non-negligible issues such as "album effect" with repeated audio samples which would negatively influence the accuracy of the classification \cite{sturm2013gtzan}, it still can be seen as the default choice in the research area of music genre classification. Figure 1 represents the degree of activity of GTZAN.
 
 \begin{figure}[htb]
-
 \begin{minipage}[b]{1.0\linewidth}
   \centering
   \centerline{\includegraphics[width=8.5cm]{figures/GTZAN1.png}}
-  \vspace{0.5cm}
+  \vspace{0.0cm}
   \caption{ Annual numbers of published works in MIR with experimental components, divided into ones that use and do not use GTZAN \cite{sturm2013gtzan}}
 \label{fig:figure1}
 \end{minipage}
@@ -146,8 +145,15 @@ In this research, we selected GTZAN as our starting dataset. George Tzanetakis c
 
 We used a modified version of the GTZAN dataset augmented by metadata and preview audio clips sourced form 7digital.com. After creating the list of files with the song name and artist, downloading and trimming the files, we used a set of scripts queries the discogs database and constructs a more complete dataset with Artist, Title, Album, Genre, Styles, and year of master release. Our dataset started as 1000 songs from 10 genres but many of the audio clips lacked information, genres groups contained duplicate songs, or entire albums. In an attempt to maintain accuracy, reduce the album effect, and distribute the years represented, we reduced the dataset to 7 genres with 60 songs in each genre. The majority of these are from GTZAN with some instances added from 7digital.com. We used the 7digital API endpoint interface to search within genres and scrape the preview clip. Although some of the previews from 7digital represent remastered versions, we cross referenced with the Discogs master release for consistency.  Ideally, the dataset would have an even distribution of songs spanning the range of all years without repeated artists. The final dataset consists of 420 audio clips in total with genres Blues, Country, Disco, Hip Hop, Metal, Pop, Rock. Any additional track samples added from 7digital were cut to 30 seconds in length using ffmpeg. Metadata was then scraped from Discogs.com API using python.
 
-
-
+\begin{figure}[htb]
+\begin{minipage}[b]{1.0\linewidth}
+  \centering
+  \centerline{\includegraphics[width=8.5cm]{figures/YearDist2.png}}
+  \vspace{0.0cm}
+  \caption{ Histogram displaying the distribution of years in our modified dataset}
+\label{fig:figure2}
+\end{minipage}
+\end{figure}
 
 
 \subsection{Classification}
@@ -179,7 +185,7 @@ We tested four variations on the KNN and SVM algorithms for each of the two segm
 
 \subsubsection{SVM using Regression} 
 
-The SVM Regression was performed on the year data only, as genres can only be classified discretely. We scaled the years from the range of 1927-2015 to a range of 0-1. Using libsvm with regression settings of a nu-SVR with a polynomial kernel, a nu value of 0.5, and a default cost parameter of 1. Combining the mean and standard deviation of MFCCs gave the most successful results. Our average mean error in calculating the year was 12.754 years for the interleaved segmentation and 10.425 years for the randomized segmentation.  
+The SVM Regression was performed on the year data only, as genres can only be classified discretely. We scaled the years from the range of 1927-2015 to a range of 0-1. Using libsvm \cite{chang2011libsvm} with regression settings of a nu-SVR with a polynomial kernel, a nu value of 0.5, and a default cost parameter of 1. Combining the mean and standard deviation of MFCCs gave the most successful results. Our average mean error in calculating the year was 12.754 years for the interleaved segmentation and 10.425 years for the randomized segmentation.  
 
 \subsubsection{KNN of Year}
 
@@ -187,6 +193,16 @@ The second approach used only the KNN directly on the year label, with no genre 
 
 \subsubsection{Hierarchical Model: SVM and KNN } 
 Our third approach make use of both the SVM and KNN models in a hierarchical manner. First we used the the SVM to classify the genres using both the mean and standard deviation of MFCCs and our spectral features. Prior to refactoring our dataset, we achieved results of 55.4\% and 66.4\% accuracy for the interleaved and randomized segmentations respectively. After refactoring, however we saw our results decrease, due to the album effect. Since we intentionally targeted repeat songs and full albums present in the GTZAN dataset, our distribution of features expanded within each genre making it more difficult for the SVM to accurately perform classification. After refactoring, the accuracy for classifying genre was 51.5\% and 61.0\% for the interleaved and randomized segmentations respectively. 
+
+\begin{figure*}
+  \includegraphics[width=0.5\textwidth]{figures/SVM_D_Confusion.png}
+  \includegraphics[width=0.5\textwidth]{figures/SVM_R_Confusion.png}
+    \includegraphics[width=0.5\textwidth]{figures/SVM_D_NEW_Confusion}
+  \includegraphics[width=0.5\textwidth]{figures/SVM_R_NEW_Confusion}
+  \caption[width=\textwidth]
+ {Confusion matrices resulting from the SVM.  \textit{Left to right}: Interleaved vs Randomized segmentation. \textit{Top to bottom}: Original GTZAN dataset vs modified dataset}
+\end{figure*}
+
 
 After classifying genre, we used the predicted genre for each test song and ran KNN to find the nearest neighbors to compute the year. The selection used to run KNN, however, only found the nearest neighbors within the genre predicted for each song. IE, if we predicted a song to be country, KNN only selects the country songs in the current training fold. Using a value of K=9 gave the best results. Our average mean error in calculating the year was 12.132 and 11.602 years for interleaved segmentation and randomized segmentation respectively. 
 
@@ -202,7 +218,7 @@ Overall, the KNN with features tuned for the calculating the year worked best. T
 
 Forward selection did not prove successful when using MFCCs and Spectral data. The algorithm results would decrease and return before grouping all MFCCs. Manually tuning by finding subsets and groupings of mean and standard deviation of MFCCs with the spectral features proved most effective. Adding Pitch Chroma was ineffective and only generated worse results for both genre and year. When constructing a feature set by calculating the mean and standard deviation of pitch chroma, the temporal resolution is lost.
 
-In each genre, many of the songs are from only a few albums. Training and testing for the genre or style classification with GTZAN is more likely doing the album classification. This ?album? effect heavily influences the genre classification albeit positively, however this is actually incorrect. The effort of improving GTZAN with discogsand 7digital did slightly improve the accuracy of the year computation. Essentially, by importing new songs and abandoning several songs that belong to the same album, the augmented dataset is more even distributed by year. This is not only beneficial for decreasing the ?album effect?, but also increasing the possibility of computing the year correctly.
+In each genre, many of the songs are from only a few albums. Training and testing for the genre or style classification with GTZAN is more likely doing the album classification. This ``album" effect heavily influences the genre classification albeit positively, however this is actually incorrect. The effort of improving GTZAN with discogsand 7digital did slightly improve the accuracy of the year computation. Essentially, by importing new songs and abandoning several songs that belong to the same album, the augmented dataset is more even distributed by year. This is not only beneficial for decreasing the ``album effect'', but also increasing the possibility of computing the year correctly.
 
 %============================================
 \section{Future Work}

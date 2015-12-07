@@ -5,6 +5,17 @@ Omar Diab, Anthony Manero, and Reid Watson,
 \newblock ``Musical genre tag classification with curated and crowdsourced
   datasets,'' .
 
+\bibitem{leichtentritt1945aesthetic}
+Hugo Leichtentritt,
+\newblock ``Aesthetic ideas as the basis of musical styles,''
+\newblock {\em The Journal of Aesthetics and Art Criticism}, vol. 4, no. 2, pp.
+  65--73, 1945.
+
+\bibitem{dannenberg2010style}
+Roger~B Dannenberg,
+\newblock ``Style in music,''
+\newblock in {\em The structure of style}, pp. 45--57. Springer, 2010.
+
 \bibitem{tzanetakis2002musical}
 George Tzanetakis and Perry Cook,
 \newblock ``Musical genre classification of audio signals,''
@@ -27,17 +38,6 @@ Tao Li, Mitsunori Ogihara, and Qi~Li,
   conference on Research and development in informaion retrieval}. ACM, 2003,
   pp. 282--289.
 
-\bibitem{leichtentritt1945aesthetic}
-Hugo Leichtentritt,
-\newblock ``Aesthetic ideas as the basis of musical styles,''
-\newblock {\em The Journal of Aesthetics and Art Criticism}, vol. 4, no. 2, pp.
-  65--73, 1945.
-
-\bibitem{dannenberg2010style}
-Roger~B Dannenberg,
-\newblock ``Style in music,''
-\newblock in {\em The structure of style}, pp. 45--57. Springer, 2010.
-
 \bibitem{sturm2013gtzan}
 Bob~L Sturm,
 \newblock ``The gtzan dataset: Its contents, its faults, their effects on
@@ -49,5 +49,11 @@ Klaus Seyerlehner, Gerhard Widmer, and Tim Pohle,
 \newblock ``Fusing block-level features for music similarity estimation,''
 \newblock in {\em Proc. of the 13th Int. Conference on Digital Audio Effects
   (DAFx-10)}, 2010, pp. 225--232.
+
+\bibitem{chang2011libsvm}
+Chih-Chung Chang and Chih-Jen Lin,
+\newblock ``Libsvm: A library for support vector machines,''
+\newblock {\em ACM Transactions on Intelligent Systems and Technology (TIST)},
+  vol. 2, no. 3, pp. 27, 2011.
 
 \end{thebibliography}
