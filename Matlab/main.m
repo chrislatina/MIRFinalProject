@@ -46,9 +46,13 @@ end
 % Construct High Dimensional Feature Matrix
 features = [features, spectral_features];
 
-%4:8 27 
+% Values 1:13 represent the mean of MFCCs. 14:26 are Std Dev of MFCCs.
+% 27:28 are mean and std devation of spectral flux
+% 29:30 are mean and std devation of spectral centroid
+%% Run NFold
 [ diff_genres, diff_years] = myNFold(years, genres, features, 6, [1:13], 3);
 
+%% Output the mean accuracy / error for genre and year
 a_genre_rate = mean(diff_genres(:));
 a_year_rate = mean(diff_years(:));
 

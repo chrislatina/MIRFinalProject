@@ -24,22 +24,21 @@ num_feat_per_genre = 60;
 
 years = cell2mat(years);
 histogram(years);
+
 %% N-FOLD
-% nFold = 6;
-% fold = 1:13;
 filesInFolder = 60;
 nSize = size(features,1);
 nSize = nSize / nFold;
 
 num_features = size(features,2);
 
-% RANDOM
+%% RANDOM
 seed = randperm(size(features,1));
 rand_genres = genres(seed);
 rand_years = years(seed);
 randData = features(seed,:);
 
-% DISTRIBUTED: Interleave vectors
+%% DISTRIBUTED: Interleave vectors
 F1 = features(1:filesInFolder,:); 
 F2 = features(filesInFolder+1:2*filesInFolder,:);
 F3 = features(2*filesInFolder+1:3*filesInFolder,:);
@@ -67,7 +66,7 @@ Y6 = years(5*filesInFolder+1:6*filesInFolder,:);
 Y7 = years(6*filesInFolder+1:7*filesInFolder,:);
 dist_years = reshape([Y1';Y2';Y3';Y4';Y5';Y6';Y7'],1,[])';
 
-% Do Separation
+%% Perform NFold
 for i = 1:nFold
     
     % RANDOM
@@ -82,8 +81,9 @@ for i = 1:nFold
     train_feat(s:e,:) = [];
     train_genres(s:e,:) = [];
     train_years(s:e,:) = [];
-%     
-    % DISTRIBUTED: Interleave vectors  
+
+
+    %% DISTRIBUTED: Interleave vectors, uncomment this for interleaved segmentation
 %     s = (i-1)*nSize+1;
 %     e = i*nSize;
 %     test_feat = dist_features(s:e,:);
@@ -96,19 +96,19 @@ for i = 1:nFold
 %     train_genres(s:e,:) = [];
 %     train_years(s:e,:) = [];
     
-    % Normalize using z-score
+    %% Normalize using z-score
     test_feat = (test_feat - repmat(mean(train_feat),size(test_feat,1),1)) ./ repmat(std(train_feat),size(test_feat,1),1);
     train_feat = (train_feat - repmat(mean(train_feat),size(train_feat,1),1)) ./ repmat(std(train_feat),size(train_feat,1),1);
 
     
-    %% Run the SVM for Genre
+    %% Run for SVM Genre classification
      estimated_genres(:,i) = svm_classify(train_feat, train_genres, test_feat);
      
-    %% Run SVM for Year
+    %% Run SVM for Year, uncomment this for SVM Regression approach
 %     estimated_years(:,i) = svm_regression(train_feat, scaleYear(train_years), test_feat,scaleYear(test_years(:,i)));
 %     estimated_years(:,i) = reScaleYear(estimated_years(:,i));
 
-    %% Run K-NN to calculate Year and Genre distance
+    %% Run K-NN to calculate Year and Genre distances
     [estimated_genres(:,i), estimated_years(:,i)] = myKnn_genre(train_genres, train_feat, test_feat, 7, train_years);
     
     %% For each track, calculate year: run K-NN for the specific genre selected.
@@ -117,7 +117,7 @@ for i = 1:nFold
 %        %Get all tracks in training data of current genre
 %        predicted_genre = test_genres{i};
 %        
-%        % Or use ground thruth
+%        % Or uncomment below to use ground thruth
 %        % predicted_genre = test_genres{i};
 % 
 %        indexC = strfind(train_genres, predicted_genre);
